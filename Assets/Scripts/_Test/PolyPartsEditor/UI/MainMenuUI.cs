@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Scripts._Test.PolyPartsEditor {
+namespace Scripts._Test.PolyPartsEditor.UI {
 	
 	/// <summary>
 	/// メインメニューのUI
 	/// </summary>
-	class MainMenuUI : MonoBehaviour {
+	public class MainMenuUI : SideMenuUI {
 
 		[Header("Buttons")]
 		public Button makeBtn;

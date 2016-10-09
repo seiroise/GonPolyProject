@@ -2,12 +2,12 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Scripts._Test.PolyPartsEditor {
+namespace Scripts._Test.PolyPartsEditor.UI {
 
 	/// <summary>
 	/// パーツ調整メニューのUI
 	/// </summary>
-	public class PartsAdjustMenuUI : MonoBehaviour {
+	public class AdjustMenuUI : SideMenuUI {
 
 		[Header("Buttons")]
 		public Button vertexAdjustBtn;

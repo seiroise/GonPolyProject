@@ -10,6 +10,7 @@ namespace Scripts._Test.PolyPartsEditor {
 	public class LerpRectPosition : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
 		public enum Trigger {
+			None,
 			Enter_Exit,
 			Click
 		}
@@ -64,30 +65,43 @@ namespace Scripts._Test.PolyPartsEditor {
 			yLerp.SetTarget(lockY ? target.sizeDelta.y : lerpTarget.y);
 		}
 
+		/// <summary>
+		/// Overへ
+		/// </summary>
+		public void ToOver() {
+			SetLerpTarget(over);
+			toOver = true;
+		}
+
+		/// <summary>
+		/// Normalへ
+		/// </summary>
+		public void ToNormal() {
+			SetLerpTarget(normal);
+			toOver = false;
+		}
+
 		#endregion
 
 		#region IPointerEvent
 
 		public void OnPointerEnter(PointerEventData eventData) {
 			if (trigger != Trigger.Enter_Exit) return;
-			SetLerpTarget(over);
-			toOver = true;
+			ToOver();
 		}
 
 		public void OnPointerExit(PointerEventData eventData) {
 			if (trigger != Trigger.Enter_Exit) return;
-			SetLerpTarget(normal);
-			toOver = false;
+			ToNormal();
 		}
 
 		public void OnPointerClick(PointerEventData eventData) {
 			if (trigger != Trigger.Click) return;
 			if (toOver) {
-				SetLerpTarget(normal);
+				ToNormal();
 			} else {
-				SetLerpTarget(over);
+				ToOver();
 			}
-			toOver = !toOver;
 		}
 
 		#endregion

@@ -13,6 +13,8 @@ namespace Seiro.Scripts.Graphics.PolyLine2D {
 		[Header("LineParameter")]
 		public float width = 0.1f;
 		public Color color = Color.white;
+		[Range(0f, 1f)]
+		public float subLineColorScale = 0.75f;	//予告線の色倍率
 
 		[Header("Effect")]
 		public ParticleSystem effectParticle;
@@ -52,7 +54,7 @@ namespace Seiro.Scripts.Graphics.PolyLine2D {
 			if(!draw) return;
 			EasyMesh[] eMeshes = new EasyMesh[2];
 			eMeshes[0] = mainLine.MakeLine(width, color);
-			eMeshes[1] = subLine.MakeLine(width, color * 0.5f);
+			eMeshes[1] = subLine.MakeLine(width, color * subLineColorScale);
 			mf.mesh = EasyMesh.ToMesh(eMeshes);
 			draw = false;
 		}

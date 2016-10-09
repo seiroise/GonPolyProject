@@ -75,7 +75,6 @@ namespace Seiro.Scripts.Geometric.Polygon.Concave {
 		/// 簡易メッシュ変換
 		/// </summary>
 		public EasyMesh ToEasyMesh(Color color) {
-			Debug.Log("Input Vertices = " + vertices.Count);
 			int size = vertices.Count;
 			Vector3[] verts = new Vector3[size];
 			Color[] colors = new Color[size];
