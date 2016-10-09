@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
-using System;
 using System.Collections.Generic;
 using Seiro.Scripts.Geometric.Polygon.Concave;
 using Seiro.Scripts.Graphics;
 using Seiro.Scripts.EventSystems;
 using Seiro.Scripts.Utility;
 
-namespace Scripts._Test.PolyPartsEditor.Polygon {
+namespace Scripts._Test.PolyPartsEditor.Common {
 
 	/// <summary>
 	/// ポリゴンパーツオブジェクト
@@ -18,7 +16,7 @@ namespace Scripts._Test.PolyPartsEditor.Polygon {
 		[Header("Polygon")]
 		public Color polygonColor = Color.white;
 		[Range(0f, 1f)]
-		public float disableColorScale = 0.75f;		//無効化時の色倍率
+		public float disableColorScale = 0.75f;     //無効化時の色倍率
 		private bool disabled = false;
 		private LerpColor lerpPolygonColor;
 
@@ -30,6 +28,7 @@ namespace Scripts._Test.PolyPartsEditor.Polygon {
 		private Color normalOutlineColor = new Color(0f, 0f, 0f, 0f);
 		private LerpColor lerpOutlineColor;
 		private List<Vector2> vertices;
+		public List<Vector2> Vertices { get { return vertices; } }
 
 		[Header("Callback")]
 		public PolyPartsObjectEvent onClick;
@@ -38,10 +37,10 @@ namespace Scripts._Test.PolyPartsEditor.Polygon {
 		private MeshFilter mf;
 		private MeshCollider mc;
 
-		private ConcavePolygon polygon;	//元データ
+		private ConcavePolygon polygon; //元データ
 		private EasyMesh eMesh;         //描画簡易メッシュ
-		private bool overed = false;	//被っているか
-		private bool draw = false;		//描画フラグ
+		private bool overed = false;    //被っているか
+		private bool draw = false;      //描画フラグ
 
 		#region UnityEvent
 
@@ -71,6 +70,17 @@ namespace Scripts._Test.PolyPartsEditor.Polygon {
 			this.vertices = vertices;
 			polygon = new ConcavePolygon(vertices);
 			draw = true;
+		}
+
+		/// <summary>
+		/// 頂点の取得
+		/// </summary>
+		public List<Vector2> GetVertices() {
+			List<Vector2> vertices = new List<Vector2>();
+			for(int i = 0; i < this.vertices.Count; ++i) {
+				vertices.Add(this.vertices[i]);
+			}
+			return vertices;
 		}
 
 		/// <summary>
@@ -136,13 +146,11 @@ namespace Scripts._Test.PolyPartsEditor.Polygon {
 		#region ICollisionEventHadler
 
 		public void OnPointerEnter(RaycastHit hit) {
-			Debug.Log("Enter");
 			lerpOutlineColor.SetTarget(overOutlineColor);
 			overed = true;
 		}
 
 		public void OnPointerExit(RaycastHit hit) {
-			Debug.Log("Exit");
 			lerpOutlineColor.SetTarget(normalOutlineColor);
 			overed = false;
 		}

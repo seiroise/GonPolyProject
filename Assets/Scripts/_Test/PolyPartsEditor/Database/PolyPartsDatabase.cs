@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Seiro.Scripts.Geometric.Polygon.Concave;
-using Scripts._Test.PolyPartsEditor.Polygon;
+using Scripts._Test.PolyPartsEditor.Common;
 
-namespace Scripts._Test.PolyPartsEditor.Component {
+namespace Scripts._Test.PolyPartsEditor.Database {
 
 	/// <summary>
 	/// ポリゴンパーツのデータベース
@@ -67,6 +66,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 		/// ポリゴンオブジェクトのクリック
 		/// </summary>
 		private void OnPolyObjClicked(PolyPartsObject polyObj) {
+			Debug.Log(onPolyObjClicked.GetPersistentEventCount());
 			onPolyObjClicked.Invoke(polyObj);
 		}
 

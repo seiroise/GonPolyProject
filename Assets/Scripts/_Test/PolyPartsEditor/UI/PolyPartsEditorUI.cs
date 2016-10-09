@@ -23,13 +23,6 @@ namespace Scripts._Test.PolyPartsEditor.UI {
 			IndicateDefaultSideMenu();
 		}
 
-		private void Update() {
-			if(Input.GetMouseButtonDown(0)) {
-				Debug.Log("IndicateAdjustMenu");
-				IndicateSideMenu("AdjustMenu");
-			}
-		}
-
 		#endregion
 
 		#region SideMenuFunction
@@ -72,6 +65,13 @@ namespace Scripts._Test.PolyPartsEditor.UI {
 			IndicateSideMenu(sideMenuTable[name]);
 		}
 
+		/// <summary>
+		/// サイドメニューの取得
+		/// </summary>
+		public SideMenuUI GetSideMenu(string name) {
+			if(!sideMenuTable.ContainsKey(name)) return null;
+			return sideMenuTable[name];
+		}
 		#endregion
 	}
 }

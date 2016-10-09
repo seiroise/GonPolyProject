@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using Scripts._Test.PolyPartsEditor.Common;
 
 namespace Scripts._Test.PolyPartsEditor.UI {
 
