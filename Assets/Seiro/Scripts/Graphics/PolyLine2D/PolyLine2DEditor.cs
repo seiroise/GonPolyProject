@@ -101,7 +101,7 @@ namespace Seiro.Scripts.Graphics.PolyLine2D {
 		/// <summary>
 		/// 状態の無効化
 		/// </summary>
-		private void DisableState() {
+		public void DisableState() {
 			if(nowState == null) return;
 			nowState.Disable();
 			nowState = null;

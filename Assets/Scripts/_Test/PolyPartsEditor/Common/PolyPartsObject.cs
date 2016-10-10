@@ -32,6 +32,8 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 
 		[Header("Callback")]
 		public PolyPartsObjectEvent onClick;
+		public PolyPartsObjectEvent onDown;
+		public PolyPartsObjectEvent onUp;
 
 		//内部パラメータ
 		private MeshFilter mf;
@@ -157,6 +159,7 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 
 		public void OnPointerDown(RaycastHit hit) {
 			lerpOutlineColor.SetTarget(clickOutlineColor);
+			onDown.Invoke(this);
 		}
 
 		public void OnPointerUp(RaycastHit hit) {
@@ -165,6 +168,7 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 			} else {
 				lerpOutlineColor.SetTarget(normalOutlineColor);
 			}
+			onUp.Invoke(this);
 		}
 
 		public void OnPointerClick(RaycastHit hit) {

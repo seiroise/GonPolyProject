@@ -7,10 +7,31 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 		protected PolyPartsAdjuster adjuster;
 		protected AdjustMenuUI adjustMenu;
 
+		#region VirtualFunction
+
+		/// <summary>
+		/// 初期化
+		/// </summary>
 		public virtual void Initialize(PolyPartsEditor editor, PolyPartsAdjuster adjuster) {
 			this.Initialize(editor);
 			this.adjuster = adjuster;
 			this.adjustMenu = adjuster.AdjustMenu;
 		}
+
+		/// <summary>
+		/// 開始
+		/// </summary>
+		public virtual void Enter() {
+			
+		}
+
+		/// <summary>
+		/// 終了
+		/// </summary>
+		public virtual void Exit() {
+			
+		}
+
+		#endregion
 	}
 }

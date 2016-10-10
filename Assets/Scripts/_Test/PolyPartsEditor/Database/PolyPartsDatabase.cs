@@ -50,12 +50,28 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		}
 
 		/// <summary>
+		/// 指定したポリゴン以外を有効化する
+		/// </summary>
+		public void EnablePolygons(PolyPartsObject ignore) {
+			EnablePolygons();
+			ignore.Disable();
+		}
+
+		/// <summary>
 		/// 全てのポリゴンを無効化する
 		/// </summary>
 		public void DisablePolygons() {
 			for(int i = 0; i < polyObjs.Count; ++i) {
 				polyObjs[i].Disable();
 			}
+		}
+
+		/// <summary>
+		/// 指定したポリゴン以外を無効化する
+		/// </summary>
+		public void DisablePolygons(PolyPartsObject ignore) {
+			DisablePolygons();
+			ignore.Enable();
 		}
 
 		#endregion
@@ -66,7 +82,6 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// ポリゴンオブジェクトのクリック
 		/// </summary>
 		private void OnPolyObjClicked(PolyPartsObject polyObj) {
-			Debug.Log(onPolyObjClicked.GetPersistentEventCount());
 			onPolyObjClicked.Invoke(polyObj);
 		}
 
