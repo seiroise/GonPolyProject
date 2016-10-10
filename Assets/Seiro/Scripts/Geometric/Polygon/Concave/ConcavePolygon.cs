@@ -45,6 +45,7 @@ namespace Seiro.Scripts.Geometric.Polygon.Concave {
 				if(distance > maxDistance) {
 					maxDistance = distance;
 					index = i;
+					Debug.Log("Update Max");
 				}
 			}
 			mostFarIndex = index;
@@ -54,6 +55,7 @@ namespace Seiro.Scripts.Geometric.Polygon.Concave {
 			Vector2 p1 = points[index];
 			Vector2 p2 = points[(index + 1) % size];
 			mostFarCross = GeomUtil.CCW(p0, p1, p2);
+			Debug.Log("MostFarIndex = [" + index + "] : CCW = " + mostFarCross);
 
 			//頂点リストの作成
 			vertices = new List<PolygonVertex>();
@@ -121,9 +123,16 @@ namespace Seiro.Scripts.Geometric.Polygon.Concave {
 					}
 					//インデックスの追加
 					if(!contains) {
-						indices[indicesCount + 0] = temp[i0].index;
-						indices[indicesCount + 1] = temp[i2].index;
-						indices[indicesCount + 2] = temp[i1].index;
+						//回転方向によってポリゴンの順序が反転する
+						if (mostFarCross > 0f) {
+							indices[indicesCount + 0] = temp[i0].index;
+							indices[indicesCount + 1] = temp[i2].index;
+							indices[indicesCount + 2] = temp[i1].index;
+						} else {
+							indices[indicesCount + 0] = temp[i0].index;
+							indices[indicesCount + 1] = temp[i1].index;
+							indices[indicesCount + 2] = temp[i2].index;
+						}
 						indicesCount += 3;
 						temp.RemoveAt(i1);
 						size--;

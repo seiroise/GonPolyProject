@@ -10,8 +10,7 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 	class PolyPartsCopy : PolyPartsAdjusterComponent {
 
 		public PolyLine2DEditor polyLineEditor;
-
-
+		
 		private bool active = false;
 		private PolyPartsObject selected;
 
@@ -46,7 +45,14 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 		/// </summary>
 		public override void Enter() {
 			base.Enter();
+			//選択オブジェクトの取得
 			selected = adjuster.GetSelected();
+			//スナップ
+			polyLineEditor.supporter.Clear();
+			polyLineEditor.supporter.AddDefaultSnap();
+			polyLineEditor.supporter.Draw();
+			//コンポーネントを活性化
+			adjuster.ActivateComponent(this);
 
 			active = true;
 		}
@@ -56,6 +62,10 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 		/// </summary>
 		public override void Exit() {
 			base.Exit();
+
+			//スナップ
+			polyLineEditor.supporter.Clear();
+			polyLineEditor.supporter.Draw();
 
 			active = false;
 		}
@@ -81,8 +91,12 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 				if(polyLineEditor.GetMousePoint(out point)) {
 					//スナップ確認
 					Vector2 snapPoint;
-					if(polyLineEditor.supporter.Snap())
-
+					if (polyLineEditor.supporter.Snap(point, out snapPoint)) {
+						point = snapPoint;
+					}
+					//コピー
+					PolyPartsObject polyObj = editor.database.InstantiateClone(selected, point);
+					polyObj.Disable();
 				}
 			}
 		}

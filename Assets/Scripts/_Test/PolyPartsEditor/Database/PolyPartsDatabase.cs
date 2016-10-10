@@ -31,13 +31,27 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// <summary>
 		/// ポリゴンオブジェクトの生成
 		/// </summary>
-		public void InstantiatePolygon(List<Vector2> vertices) {
+		public PolyPartsObject InstantiatePolygon(List<Vector2> vertices) {
 			PolyPartsObject polyObj = Instantiate<PolyPartsObject>(prefab);
 			polyObj.transform.SetParent(transform);
 			polyObj.SetVertices(vertices);
 			polyObj.onClick.AddListener(OnPolyObjClicked);
 			//追加
 			polyObjs.Add(polyObj);
+
+			return polyObj;
+		}
+
+		/// <summary>
+		/// ポリゴンオブジェクトの複製を作成する
+		/// </summary>
+		public PolyPartsObject InstantiateClone(PolyPartsObject polyObj, Vector2 point) {
+			PolyPartsObject clone = polyObj.InstantiateClone(point);
+			clone.onClick.AddListener(OnPolyObjClicked);
+			//追加
+			polyObjs.Add(clone);
+
+			return clone;
 		}
 
 		/// <summary>

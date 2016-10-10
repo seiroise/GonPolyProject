@@ -41,6 +41,7 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 
 		private ConcavePolygon polygon; //元データ
 		private EasyMesh eMesh;         //描画簡易メッシュ
+		private Rect inclusionRect;		//包括矩形
 		private bool overed = false;    //被っているか
 		private bool draw = false;      //描画フラグ
 
@@ -69,9 +70,47 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// 頂点の設定
 		/// </summary>
 		public void SetVertices(List<Vector2> vertices) {
+			//包括矩形から原点からのオフセットを求め適用する
+			Rect rect = CalculateRect(vertices);
+			for (int i = 0; i < vertices.Count; ++i) {
+				vertices[i] -= rect.center;
+			}
 			this.vertices = vertices;
+			//座標をずらす
+			transform.localPosition = rect.center;
+			//改めて包括矩形を求める
+			inclusionRect = CalculateRect(vertices);
+			//ポリゴンの生成
+			vertices.RemoveAt(vertices.Count -1);		//末尾を一時的に削除
 			polygon = new ConcavePolygon(vertices);
+			vertices.Add(vertices[0]);					//末尾に始点を追加
+
 			draw = true;
+		}
+
+		/// <summary>
+		/// 頂点群の包括矩形を求める
+		/// </summary>
+		private Rect CalculateRect(List<Vector2> vertices) {
+			float xmin, ymin, xmax, ymax;
+			xmin = xmax = vertices[0].x;
+			ymin = ymax = vertices[0].y;
+
+			for (int i = 1; i < vertices.Count; ++i) {
+				Vector2 p = vertices[i];
+				if (xmin > p.x) {
+					xmin = p.x;
+				} else if(xmax < p.x){
+					xmax = p.x;
+				}
+				if (ymin > p.y) {
+					ymin = p.y;
+				} else if(ymax < p.y){
+					ymax = p.y;
+				}
+			}
+
+			return new Rect(xmin, ymin, xmax - xmin, ymax - ymin);
 		}
 
 		/// <summary>
@@ -79,8 +118,9 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// </summary>
 		public List<Vector2> GetVertices() {
 			List<Vector2> vertices = new List<Vector2>();
+			Vector2 offset = transform.localPosition;
 			for(int i = 0; i < this.vertices.Count; ++i) {
-				vertices.Add(this.vertices[i]);
+				vertices.Add(this.vertices[i] + offset);
 			}
 			return vertices;
 		}
@@ -141,6 +181,33 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 			if(!lerpOutlineColor.Processing) return;
 			lerpOutlineColor.Update(lerpT * Time.deltaTime);
 			draw = true;
+		}
+
+		/// <summary>
+		/// 色の変更
+		/// </summary>
+		public void SetPolygonColor(Color color) {
+			polygonColor = color;
+			if(disabled) {
+				lerpPolygonColor.SetTarget(color);
+			} else {
+				lerpPolygonColor.SetTarget(color * disableColorScale);
+			}
+		}
+
+		#endregion
+
+		#region CloneFunction
+
+		/// <summary>
+		/// 複製を生成する
+		/// </summary>
+		public PolyPartsObject InstantiateClone(Vector2 point) {
+			GameObject gObj = (GameObject)Instantiate(gameObject, Vector3.zero, transform.rotation);
+			PolyPartsObject polyObj = gObj.GetComponent<PolyPartsObject>();
+			polyObj.SetVertices(vertices);
+			gObj.transform.localPosition = point;
+			return polyObj;
 		}
 
 		#endregion
