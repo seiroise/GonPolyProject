@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Scripts._Test.PolyPartsEditor.UI.HideIndicate;
 
-namespace Scripts._Test.PolyPartsEditor.UI {
+namespace Scripts._Test.PolyPartsEditor.UI.Main {
 	
 	/// <summary>
 	/// メインメニューのUI
 	/// </summary>
-	public class MainMenuUI : SideMenuUI {
+	public class MainMenuUI : HideIndicateUI {
 
 		[Header("Buttons")]
 		public Button makeBtn;

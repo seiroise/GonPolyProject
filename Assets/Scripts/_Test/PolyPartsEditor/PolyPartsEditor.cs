@@ -17,7 +17,7 @@ namespace Scripts._Test.PolyPartsEditor {
 		private List<PolyPartsEditorComponent> components;
 
 		[Header("UI")]
-		public PolyPartsEditorUI editorUI;
+		public PolyPartsEditorUI ui;
 
 		[Header("DataBase")]
 		public PolyPartsDatabase database;

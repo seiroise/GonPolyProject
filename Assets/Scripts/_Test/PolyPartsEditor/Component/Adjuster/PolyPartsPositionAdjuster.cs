@@ -33,7 +33,7 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 		public override void Initialize(PolyPartsEditor editor, PolyPartsAdjuster adjuster) {
 			base.Initialize(editor, adjuster);
 
-			//コールバックの設定
+			//UIコールバックの設定
 			adjustMenu.moveBtn.onClick.RemoveListener(OnMoveButtonClicked);
 			adjustMenu.moveBtn.onClick.AddListener(OnMoveButtonClicked);
 		}

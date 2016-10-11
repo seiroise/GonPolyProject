@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 using Scripts._Test.PolyPartsEditor.Common;
 
-namespace Scripts._Test.PolyPartsEditor.UI {
+namespace Scripts._Test.PolyPartsEditor.UI.HideIndicate {
 
 	/// <summary>
-	/// ポリゴンパーツ編集エディタの左メニュー
+	/// ポリゴンパーツ編集エディタの表示/非表示UI
 	/// </summary>
-	public abstract class SideMenuUI : MonoBehaviour {
+	public abstract class HideIndicateUI : MonoBehaviour, IHideIndicateUI<HideIndicateUI> {
 
 		[Header("LerpPosition")]
 		public LerpRectPosition lerpPosition;
 
-		#region Function
+		#region IHideIndicateUI
 
 		/// <summary>
 		/// 表示
 		/// </summary>
 		public void Indicate() {
-			if(!lerpPosition) return;
+			if (!lerpPosition) return;
 			lerpPosition.ToNormal();
 		}
 
@@ -25,7 +25,7 @@ namespace Scripts._Test.PolyPartsEditor.UI {
 		/// 非表示
 		/// </summary>
 		public void Hide() {
-			if(!lerpPosition) return;
+			if (!lerpPosition) return;
 			lerpPosition.ToOver();
 		}
 

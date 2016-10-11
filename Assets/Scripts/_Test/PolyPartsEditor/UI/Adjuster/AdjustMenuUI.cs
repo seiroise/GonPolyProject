@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Scripts._Test.PolyPartsEditor.UI.HideIndicate;
 
-namespace Scripts._Test.PolyPartsEditor.UI {
+namespace Scripts._Test.PolyPartsEditor.UI.Adjuster {
 
 	/// <summary>
 	/// パーツ調整メニューのUI
 	/// </summary>
-	public class AdjustMenuUI : SideMenuUI {
+	public class AdjustMenuUI : HideIndicateUI {
 
 		[Header("Buttons")]
 		public Button vertexAdjustBtn;

@@ -14,7 +14,8 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 	public class PolyPartsObject : MonoBehaviour, ICollisionEventHandler {
 
 		[Header("Polygon")]
-		public Color polygonColor = Color.white;
+		[SerializeField]
+		private Color polygonColor = Color.white;
 		[Range(0f, 1f)]
 		public float disableColorScale = 0.75f;     //無効化時の色倍率
 		private bool disabled = false;
@@ -188,11 +189,18 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// </summary>
 		public void SetPolygonColor(Color color) {
 			polygonColor = color;
-			if(disabled) {
+			if(!disabled) {
 				lerpPolygonColor.SetTarget(color);
 			} else {
 				lerpPolygonColor.SetTarget(color * disableColorScale);
 			}
+		}
+
+		/// <summary>
+		/// 色の取得
+		/// </summary>
+		public Color GetPolygonColor() {
+			return polygonColor;
 		}
 
 		#endregion

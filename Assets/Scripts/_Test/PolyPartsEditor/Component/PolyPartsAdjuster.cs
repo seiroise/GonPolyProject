@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Scripts._Test.PolyPartsEditor.UI;
 using Scripts._Test.PolyPartsEditor.Common;
 using Scripts._Test.PolyPartsEditor.Component.Adjuster;
+using Scripts._Test.PolyPartsEditor.UI.Adjuster;
 
 namespace Scripts._Test.PolyPartsEditor.Component {
 
@@ -30,7 +31,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 			base.Initialize(editor);
 
 			//メニュー設定
-			adjustMenu = (AdjustMenuUI)editor.editorUI.GetSideMenu(MENU_NAME);
+			adjustMenu = (AdjustMenuUI)editor.ui.sideMenu.GetUI(MENU_NAME);
 			if(adjustMenu) {
 				adjustMenu.exitBtn.onClick.AddListener(OnExitbuttonClicked);
 			}
@@ -53,7 +54,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 			//選択ポリゴンオブジェクトの設定
 			SetSelected(polyObj);
 			//調整メニューの表示
-			editor.editorUI.IndicateSideMenu(MENU_NAME);
+			editor.ui.sideMenu.IndicateUI(MENU_NAME);
 			//選択以外を無効化
 			editor.database.DisablePolygons(polyObj);
 			//登録してあるコールバックの設定変更
@@ -67,7 +68,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 			//ディスる
 			DisactivateComponent();
 			//デフォルトサイドメニューの表示
-			editor.editorUI.IndicateDefaultSideMenu();
+			editor.ui.sideMenu.IndicateDefaultUI();
 			//選択以外を無効化
 			editor.database.EnablePolygons();
 			//登録してあるコールバックの設定変更

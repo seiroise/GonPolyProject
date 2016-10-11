@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Seiro.Scripts.Graphics.PolyLine2D;
-using Scripts._Test.PolyPartsEditor.UI;
+using Scripts._Test.PolyPartsEditor.UI.Main;
 
 namespace Scripts._Test.PolyPartsEditor.Component {
 	
@@ -20,7 +20,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 		public override void Initialize(PolyPartsEditor editor) {
 			base.Initialize(editor);
 
-			mainMenu = (MainMenuUI)editor.editorUI.GetSideMenu("MainMenu");
+			mainMenu = (MainMenuUI)editor.ui.sideMenu.GetUI("MainMenu");
 			if(mainMenu) {
 				mainMenu.makeBtn.onClick.AddListener(OnMakeButtonCLicked);
 			}

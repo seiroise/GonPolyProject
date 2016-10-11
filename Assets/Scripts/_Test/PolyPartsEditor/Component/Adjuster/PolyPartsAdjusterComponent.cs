@@ -1,4 +1,4 @@
-﻿using Scripts._Test.PolyPartsEditor.UI;
+﻿using Scripts._Test.PolyPartsEditor.UI.Adjuster;
 
 namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 
