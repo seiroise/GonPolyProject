@@ -55,6 +55,15 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		}
 
 		/// <summary>
+		/// ポリゴンオブジェクトの削除
+		/// </summary>
+		public void DeletePolyPartsObject(PolyPartsObject polyObj) {
+			if(polyObjs.Remove(polyObj)) {
+				Destroy(polyObj.gameObject);
+			}
+		}
+
+		/// <summary>
 		/// 全てのポリゴンを有効化する
 		/// </summary>
 		public void EnablePolygons() {

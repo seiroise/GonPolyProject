@@ -34,6 +34,8 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 		/// </summary>
 		public override void Enter() {
 			base.Enter();
+			//コンポーネントを活性化
+			adjuster.ActivateComponent(this);
 			//選択ポリゴンの取得
 			selected = adjuster.GetSelected();
 			//選択ポリゴンの無効化
@@ -41,8 +43,6 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 			//ポリラインエディタの頂点調整モードを有効化
 			List<Vector2> vertices = selected.GetVertices();
 			polyLineEditor.EnableAdjuster(vertices, true);
-			//コンポーネントを活性化
-			adjuster.ActivateComponent(this);
 			//コールバックの設定
 			polyLineEditor.onAdjusterExit.RemoveListener(OnAdjustEnd);
 			polyLineEditor.onAdjusterExit.AddListener(OnAdjustEnd);

@@ -35,7 +35,7 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 		public override void Initialize(PolyPartsEditor editor, PolyPartsAdjuster adjuster) {
 			base.Initialize(editor, adjuster);
 
-			//コールバックの設定
+			//UIコールバックの設定
 			adjustMenu.copyBtn.onClick.RemoveListener(OnCopyButtonClicked);
 			adjustMenu.copyBtn.onClick.AddListener(OnCopyButtonClicked);
 		}
@@ -45,14 +45,14 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 		/// </summary>
 		public override void Enter() {
 			base.Enter();
+			//コンポーネントを活性化
+			adjuster.ActivateComponent(this);
 			//選択オブジェクトの取得
 			selected = adjuster.GetSelected();
 			//スナップ
 			polyLineEditor.supporter.Clear();
 			polyLineEditor.supporter.AddDefaultSnap();
 			polyLineEditor.supporter.Draw();
-			//コンポーネントを活性化
-			adjuster.ActivateComponent(this);
 
 			active = true;
 		}

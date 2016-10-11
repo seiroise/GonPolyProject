@@ -49,7 +49,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 		/// <summary>
 		/// Adjusterの開始
 		/// </summary>
-		private void Enter(PolyPartsObject polyObj) {
+		public void Enter(PolyPartsObject polyObj) {
 			//選択ポリゴンオブジェクトの設定
 			SetSelected(polyObj);
 			//調整メニューの表示
@@ -63,7 +63,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 		/// <summary>
 		/// Adjusterの終了
 		/// </summary>
-		private void Exit() {
+		public void Exit() {
 			//ディスる
 			DisactivateComponent();
 			//デフォルトサイドメニューの表示
