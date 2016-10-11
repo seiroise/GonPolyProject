@@ -212,6 +212,10 @@ namespace Seiro.Scripts.Graphics.PolyLine2D {
 					if(Input.GetMouseButtonUp(0)) {
 						Vector2 point;
 						if(editor.GetMousePoint(out point)) {
+							Vector2 snapPoint;
+							if(editor.supporter.Snap(point, out snapPoint)) {
+								point = snapPoint;
+							}
 							EndVertexMove(point);
 						}
 					}

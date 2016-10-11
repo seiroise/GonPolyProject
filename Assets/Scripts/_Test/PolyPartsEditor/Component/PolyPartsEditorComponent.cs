@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System;
-using Seiro.Scripts.Graphics.PolyLine2D;
 
 namespace Scripts._Test.PolyPartsEditor.Component {
 
@@ -14,7 +12,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 		/// <summary>
 		/// 初期化
 		/// </summary>
-		public virtual void Initialoze(PolyPartsEditor editor) {
+		public virtual void Initialize(PolyPartsEditor editor) {
 			this.editor = editor;
 		}
 
