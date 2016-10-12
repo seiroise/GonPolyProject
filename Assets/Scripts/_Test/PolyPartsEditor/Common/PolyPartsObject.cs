@@ -35,13 +35,16 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		public PolyPartsObjectEvent onClick;
 		public PolyPartsObjectEvent onDown;
 		public PolyPartsObjectEvent onUp;
+		public PolyPartsObjectEvent onDraw;
 
 		//内部パラメータ
 		private MeshFilter mf;
 		private MeshCollider mc;
 
 		private ConcavePolygon polygon; //元データ
-		private EasyMesh eMesh;         //描画簡易メッシュ
+		private EasyMesh drawEMesh;         //描画簡易メッシュ
+		private EasyMesh targetColorEMesh;	//目標色簡易メッシュ
+		private EasyMesh[] eMeshes;		//描画簡易メッシュ領域
 		private Rect inclusionRect;		//包括矩形
 		private bool overed = false;    //被っているか
 		private bool draw = false;      //描画フラグ
@@ -85,6 +88,15 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 			vertices.RemoveAt(vertices.Count -1);		//末尾を一時的に削除
 			polygon = new ConcavePolygon(vertices);
 			vertices.Add(vertices[0]);					//末尾に始点を追加
+
+			//簡易メッシュの確保
+			drawEMesh = polygon.ToEasyMesh(polygonColor);
+			targetColorEMesh = polygon.ToEasyMesh(polygonColor);
+			//コールバック
+			onDraw.Invoke(this);
+
+			//描画用簡易メッシュ領域の確保
+			eMeshes = new EasyMesh[2];
 
 			draw = true;
 		}
@@ -131,8 +143,8 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// </summary>
 		public void Enable() {
 			if(!disabled) return;
-			lerpPolygonColor.SetTarget(polygonColor);
 			disabled = !disabled;
+			SetPolygonColor(polygonColor);
 		}
 
 		/// <summary>
@@ -140,8 +152,8 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// </summary>
 		public void Disable() {
 			if(disabled) return;
-			lerpPolygonColor.SetTarget(polygonColor * disableColorScale);
 			disabled = !disabled;
+			SetPolygonColor(polygonColor);
 		}
 
 		/// <summary>
@@ -150,8 +162,7 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		private void Draw() {
 			if(!draw) return;
 			//描画用簡易ポリゴンの作成
-			EasyMesh[] eMeshes = new EasyMesh[2];
-			eMeshes[0] = polygon.ToEasyMesh(lerpPolygonColor.Value);
+			eMeshes[0] = drawEMesh;
 			eMeshes[1] = EasyMesh.MakePolyLine2D(vertices, width, lerpOutlineColor.Value);
 			Mesh mesh = EasyMesh.ToMesh(eMeshes);
 			//描画
@@ -172,6 +183,8 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		private void UpdatePolygon() {
 			if(!lerpPolygonColor.Processing) return;
 			lerpPolygonColor.Update(lerpT * Time.deltaTime);
+			//簡易メッシュの色変更
+			drawEMesh.SetColor(lerpPolygonColor.Value);
 			draw = true;
 		}
 
@@ -194,6 +207,10 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 			} else {
 				lerpPolygonColor.SetTarget(color * disableColorScale);
 			}
+			//簡易ポリゴンの更新
+			targetColorEMesh.SetColor(color);
+			//コールバック
+			onDraw.Invoke(this);
 		}
 
 		/// <summary>
@@ -201,6 +218,13 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// </summary>
 		public Color GetPolygonColor() {
 			return polygonColor;
+		}
+
+		/// <summary>
+		/// 簡易メッシュを取得
+		/// </summary>
+		public EasyMesh GetPolygonEasyMesh() {
+			return targetColorEMesh;
 		}
 
 		#endregion

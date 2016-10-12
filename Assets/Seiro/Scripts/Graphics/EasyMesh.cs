@@ -45,6 +45,15 @@ namespace Seiro.Scripts.Graphics {
 			return mesh;
 		}
 
+		/// <summary>
+		/// 色の設定
+		/// </summary>
+		public void SetColor(Color color) {
+			for(int i = 0; i< colors.Length; ++i) {
+				colors[i] = color;
+			}
+		}
+
 		#endregion
 
 		#region Static Function

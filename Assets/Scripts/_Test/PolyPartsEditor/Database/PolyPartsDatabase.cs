@@ -14,6 +14,7 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 
 		[Header("Callback")]
 		public PolyPartsObjectEvent onPolyObjClicked;
+		public PolyPartsObjectEvent onPolyObjDrawed;
 
 		//内部パラメータ
 		private List<PolyPartsObject> polyObjs;
@@ -33,9 +34,15 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// </summary>
 		public PolyPartsObject InstantiatePolygon(List<Vector2> vertices) {
 			PolyPartsObject polyObj = Instantiate<PolyPartsObject>(prefab);
+
+			//コールバック設定(処理の関係上先に設定)
+			polyObj.onClick.AddListener(OnPolyObjClicked);
+			polyObj.onDraw.AddListener(OnPolyObjDrawed);
+
+			//transformなどの設定
 			polyObj.transform.SetParent(transform);
 			polyObj.SetVertices(vertices);
-			polyObj.onClick.AddListener(OnPolyObjClicked);
+
 			//追加
 			polyObjs.Add(polyObj);
 
@@ -106,6 +113,13 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// </summary>
 		private void OnPolyObjClicked(PolyPartsObject polyObj) {
 			onPolyObjClicked.Invoke(polyObj);
+		}
+
+		/// <summary>
+		/// ポリゴンオブジェクトの描画
+		/// </summary>
+		private void OnPolyObjDrawed(PolyPartsObject polyObj) {
+			onPolyObjDrawed.Invoke(polyObj);
 		}
 
 		#endregion
