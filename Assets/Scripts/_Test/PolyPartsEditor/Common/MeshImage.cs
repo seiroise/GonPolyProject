@@ -2,13 +2,14 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Seiro.Scripts.Graphics;
+using Seiro.Scripts.Geometric;
 
 namespace Scripts._Test.PolyPartsEditor.Common {
 	
 	/// <summary>
 	/// メッシュ形状のイメージ
 	/// </summary>
-	class MeshImage : Graphic {
+	class MeshImage : MaskableGraphic {
 
 		private EasyMesh eMesh;
 		private List<UIVertex> uiVertices;
@@ -48,8 +49,27 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// <summary>
 		/// 簡易メッシュの設定
 		/// </summary>
-		public void SetEasyMesh(EasyMesh eMesh) {
-			this.eMesh = eMesh;
+		public void SetEasyMesh(EasyMesh src) {
+			//サイズの調整
+			List<Vector2> vertices = new List<Vector2>();
+			foreach (var e in src.verts) vertices.Add(e);
+			Rect meshRect = GeomUtil.CalculateRect(vertices);
+			//拡大率の計算
+			Rect rect = rectTransform.rect;
+			float xScale = rect.width / meshRect.width;
+			float yScale = rect.height / meshRect.height;
+			eMesh = new EasyMesh(src);
+			eMesh.Scaling(Mathf.Abs(xScale < yScale ? xScale : yScale));
+
+			SetVerticesDirty();
+		}
+
+		/// <summary>
+		/// 色の設定
+		/// </summary>
+		public void SetColor(Color color) {
+			if (eMesh == null) return;
+			eMesh.SetColor(color);
 			SetVerticesDirty();
 		}
 

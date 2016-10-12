@@ -36,7 +36,8 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		public PolyPartsObjectEvent onClick;
 		public PolyPartsObjectEvent onDown;
 		public PolyPartsObjectEvent onUp;
-		public PolyPartsObjectEvent onDraw;
+		public PolyPartsObjectEvent onVertexChanged;
+		public PolyPartsObjectEvent onColorChanged;
 
 		//内部パラメータ
 		private MeshFilter mf;
@@ -93,11 +94,12 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 			//簡易メッシュの確保
 			drawEMesh = polygon.ToEasyMesh(polygonColor);
 			targetColorEMesh = polygon.ToEasyMesh(polygonColor);
-			//コールバック
-			onDraw.Invoke(this);
 
 			//描画用簡易メッシュ領域の確保
 			eMeshes = new EasyMesh[2];
+
+			//コールバック
+			onVertexChanged.Invoke(this);
 
 			draw = true;
 		}
@@ -186,7 +188,7 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 			//簡易ポリゴンの更新
 			targetColorEMesh.SetColor(color);
 			//コールバック
-			onDraw.Invoke(this);
+			onColorChanged.Invoke(this);
 		}
 
 		/// <summary>

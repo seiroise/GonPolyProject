@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using System;
 using Scripts._Test.PolyPartsEditor.Common;
 using Seiro.Scripts.Graphics;
 using Scripts._Test.PolyPartsEditor.Database;
@@ -12,28 +14,30 @@ namespace Scripts._Test.PolyPartsEditor.UI.Hierarchy {
 	[RequireComponent(typeof(RectTransform))]
 	class HierarchyUIContent : MonoBehaviour {
 
+		[Serializable]
+		public class ContentEvent : UnityEvent<HierarchyUIContent> { }
+
 		[Header("UI")]
 		public MeshImage meshImage;
+		public Button button;
 		public Text text;
 
-		[Header("Adjust")]
-		public float maxWidth;
-		public Vector2 spacing = new Vector2(5f, 5f);
+		[Header("Callback")]
+		public ContentEvent onClick;
 
-		[Header("Test")]
-		public PolyPartsDatabase db;
-
-		private RectTransform rectTransform;
-		private float height;
+		private RectTransform rectTrans;
+		private PolyPartsObject polyObj;
 
 		#region UnityEvent
 
 		private void Awake() {
-			rectTransform = GetComponent<RectTransform>();
+			rectTrans = GetComponent<RectTransform>();
 		}
 
 		private void Start() {
-			db.onPolyObjDrawed.AddListener(SetPolyObject);
+			if (button) {
+				button.onClick.AddListener(OnClick);
+			}
 		}
 
 		#endregion
@@ -41,30 +45,28 @@ namespace Scripts._Test.PolyPartsEditor.UI.Hierarchy {
 		#region Function
 
 		/// <summary>
-		/// 表示するポリゴンオブジェクトの設定
+		/// ポリゴンオブジェクトの設定
 		/// </summary>
-		public void SetPolyObject(PolyPartsObject polyObj) {
-			if(meshImage) {
+		public void SetPolyObj(PolyPartsObject polyObj) {
+			this.polyObj = polyObj;
+		}
 
-				//メッシュイメージの設定
-				EasyMesh eMesh = polyObj.GetPolygonEasyMesh();
-				meshImage.SetEasyMesh(eMesh);
+		/// <summary>
+		/// ポリゴンオブジェクトを取得
+		/// </summary>
+		public PolyPartsObject GetPolyObj() {
+			return polyObj;
+		}
 
-				//各種調整
-				Rect rect = polyObj.GetInclusionRect();
+		#endregion
 
-				//MeshImage倍率調整
-				float scale = (maxWidth - (spacing.x * 2f)) / rect.width;
-				meshImage.rectTransform.localScale = new Vector2(scale, scale);
+		#region UICallback
 
-				//位置調整
-				this.height = rect.height * scale + (spacing.y * 2f);
-
-				//大きさ調整
-				Vector2 sizeDelta = rectTransform.sizeDelta;
-				sizeDelta.y = height;
-				rectTransform.sizeDelta = sizeDelta;
-			}
+		/// <summary>
+		/// ボタンのクリック
+		/// </summary>
+		private void OnClick() {
+			onClick.Invoke(this);
 		}
 
 		#endregion
