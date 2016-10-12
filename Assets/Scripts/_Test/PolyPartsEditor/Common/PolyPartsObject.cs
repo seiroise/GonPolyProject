@@ -4,6 +4,7 @@ using Seiro.Scripts.Geometric.Polygon.Concave;
 using Seiro.Scripts.Graphics;
 using Seiro.Scripts.EventSystems;
 using Seiro.Scripts.Utility;
+using Seiro.Scripts.Geometric;
 
 namespace Scripts._Test.PolyPartsEditor.Common {
 
@@ -75,7 +76,7 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// </summary>
 		public void SetVertices(List<Vector2> vertices) {
 			//包括矩形から原点からのオフセットを求め適用する
-			Rect rect = CalculateRect(vertices);
+			Rect rect = GeomUtil.CalculateRect(vertices);
 			for (int i = 0; i < vertices.Count; ++i) {
 				vertices[i] -= rect.center;
 			}
@@ -83,7 +84,7 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 			//座標をずらす
 			transform.localPosition = rect.center;
 			//改めて包括矩形を求める
-			inclusionRect = CalculateRect(vertices);
+			inclusionRect = GeomUtil.CalculateRect(vertices);
 			//ポリゴンの生成
 			vertices.RemoveAt(vertices.Count -1);		//末尾を一時的に削除
 			polygon = new ConcavePolygon(vertices);
@@ -99,31 +100,6 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 			eMeshes = new EasyMesh[2];
 
 			draw = true;
-		}
-
-		/// <summary>
-		/// 頂点群の包括矩形を求める
-		/// </summary>
-		private Rect CalculateRect(List<Vector2> vertices) {
-			float xmin, ymin, xmax, ymax;
-			xmin = xmax = vertices[0].x;
-			ymin = ymax = vertices[0].y;
-
-			for (int i = 1; i < vertices.Count; ++i) {
-				Vector2 p = vertices[i];
-				if (xmin > p.x) {
-					xmin = p.x;
-				} else if(xmax < p.x){
-					xmax = p.x;
-				}
-				if (ymin > p.y) {
-					ymin = p.y;
-				} else if(ymax < p.y){
-					ymax = p.y;
-				}
-			}
-
-			return new Rect(xmin, ymin, xmax - xmin, ymax - ymin);
 		}
 
 		/// <summary>
@@ -225,6 +201,13 @@ namespace Scripts._Test.PolyPartsEditor.Common {
 		/// </summary>
 		public EasyMesh GetPolygonEasyMesh() {
 			return targetColorEMesh;
+		}
+
+		/// <summary>
+		/// 包括矩形の取得
+		/// </summary>
+		public Rect GetInclusionRect() {
+			return inclusionRect;
 		}
 
 		#endregion
