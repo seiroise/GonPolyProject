@@ -62,7 +62,6 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// <summary>
 		/// ポリゴンオブジェクトの初期化
 		/// </summary>
-		/// <param name="polyObj"></param>
 		private void InitializePolyObj(PolyPartsObject polyObj) {
 
 			//親の設定

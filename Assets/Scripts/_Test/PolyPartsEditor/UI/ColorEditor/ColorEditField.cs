@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace Scripts._Test.PolyPartsEditor.UI.ColorEditor {
 	
@@ -7,6 +8,9 @@ namespace Scripts._Test.PolyPartsEditor.UI.ColorEditor {
 	/// 色編集フィールド
 	/// </summary>
 	class ColorEditField : MonoBehaviour {
+
+		[Header("Color")]
+		public Color initColor = Color.white;
 
 		[Header("Preview")]
 		public Image now;
@@ -51,7 +55,7 @@ namespace Scripts._Test.PolyPartsEditor.UI.ColorEditor {
 			if (hexInput) {
 				hexInput.onEndEdit.AddListener(OnHexValueEndEdit);
 			}
-			SetColor(Color.white);
+			SetColor(initColor);
 		}
 
 		/// <summary>
