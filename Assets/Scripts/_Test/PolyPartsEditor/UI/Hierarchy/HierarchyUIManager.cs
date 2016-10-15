@@ -18,6 +18,9 @@ namespace Scripts._Test.PolyPartsEditor.UI.Hierarchy {
 		[Header("Prefab")]
 		public HierarchyUIContent prefab;
 
+		[Header("Alignment")]
+		public PolyPartsAlignment alignment;
+
 		private Dictionary<PolyPartsObject, HierarchyUIContent> polyObjTable;
 
 		#region UnityEvent
@@ -56,11 +59,44 @@ namespace Scripts._Test.PolyPartsEditor.UI.Hierarchy {
 		}
 
 		/// <summary>
-		/// コンテンツの追加
+		/// コンテントの追加
 		/// </summary>
 		private void AddContent(PolyPartsObject polyObj) {
 			HierarchyUIContent content = InstantiateContent(polyObj);
+			//コンテントの追加
 			polyObjTable.Add(polyObj, content);
+		}
+
+		/// <summary>
+		/// コンテントの削除
+		/// </summary>
+		private void DelteContent(PolyPartsObject polyObj) {
+			if (!polyObjTable.ContainsKey(polyObj)) return;
+			polyObjTable.Remove(polyObj);
+			//コンテントの削除
+			HierarchyUIContent content = polyObjTable[polyObj];
+			Destroy(content.gameObject);
+		}
+
+		/// <summary>
+		/// コンテント内のポリゴンの頂点変更
+		/// </summary>
+		private void PolyObjVertexChanged(PolyPartsObject polyObj) {
+			if (!polyObjTable.ContainsKey(polyObj)) return;
+			HierarchyUIContent content = polyObjTable[polyObj];
+			//コンテントのメッシュを再設定
+			content.meshImage.SetEasyMesh(polyObj.GetPolygonEasyMesh());
+		}
+
+		/// <summary>
+		/// コンテント内のポリゴンの色変更
+		/// </summary>
+		private void PolyObjColorChanged(PolyPartsObject polyObj) {
+			//Contentの取得
+			if (!polyObjTable.ContainsKey(polyObj)) return;
+			HierarchyUIContent content = polyObjTable[polyObj];
+			//コンテントのメッシュの色を再設定
+			content.meshImage.SetColor(polyObj.GetPolygonColor());
 		}
 
 		#endregion
@@ -71,7 +107,6 @@ namespace Scripts._Test.PolyPartsEditor.UI.Hierarchy {
 		/// ポリゴンオブジェクトの生成
 		/// </summary>
 		private void OnPolyObjInstantiated(PolyPartsObject polyObj) {
-			//Contentの追加
 			AddContent(polyObj);
 		}
 
@@ -79,31 +114,21 @@ namespace Scripts._Test.PolyPartsEditor.UI.Hierarchy {
 		/// ポリゴンオブジェクトの削除
 		/// </summary>
 		private void OnPolyObjDeleted(PolyPartsObject polyObj) {
-			//Contentの取得
-			if (!polyObjTable.ContainsKey(polyObj)) return;
-			HierarchyUIContent content = polyObjTable[polyObj];
-			//Contentの削除
-			Destroy(content.gameObject);
+			DelteContent(polyObj);
 		}
 
 		/// <summary>
 		/// ポリゴンオブジェクトの頂点変更
 		/// </summary>
 		private void OnPolyObjVertexChanged(PolyPartsObject polyObj) {
-			//Contentの取得
-			if (!polyObjTable.ContainsKey(polyObj)) return;
-			HierarchyUIContent content = polyObjTable[polyObj];
-			content.meshImage.SetEasyMesh(polyObj.GetPolygonEasyMesh());
+			PolyObjVertexChanged(polyObj);	
 		}
 
 		/// <summary>
 		/// ポリゴンオブジェクトの色変更
 		/// </summary>
 		private void OnPolyObjColorChanged(PolyPartsObject polyObj) {
-			//Contentの取得
-			if (!polyObjTable.ContainsKey(polyObj)) return;
-			HierarchyUIContent content = polyObjTable[polyObj];
-			content.meshImage.SetColor(polyObj.GetPolygonColor());
+			PolyObjColorChanged(polyObj);
 		}
 
 		#endregion

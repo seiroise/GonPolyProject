@@ -9,6 +9,11 @@ namespace Seiro.Scripts.ObjectPool {
 	public interface IMonoPoolItem<T> where T :  MonoBehaviour {
 
 		/// <summary>
+		/// 初期化
+		/// </summary>
+		void Initialize();
+
+		/// <summary>
 		/// 有効化
 		/// </summary>
 		void Activate();
