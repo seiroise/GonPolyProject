@@ -5,9 +5,9 @@ using Seiro.Scripts.FSM;
 namespace Scripts._Test1.UnitEditor.Component.Control {
 
 	/// <summary>
-	/// ユニットエディタの操作系コンポーネント(ステートマシン)
+	/// ユニットエディタの操作コンポーネント
 	/// </summary>
-	public abstract class UnitEditorControlComponent : UnitEditorComponent, IState {
+	public abstract class UnitEditorControlComponent : UnitEditorStateComponent {
 
 		protected UnitEditorControl editorController;
 
@@ -28,14 +28,6 @@ namespace Scripts._Test1.UnitEditor.Component.Control {
 			base.Initialize(unitEditor);
 			this.editorController = editorController;
 		}
-
-		#endregion
-
-		#region IState
-
-		public void Enter() { }
-
-		public void Exit() { }
 
 		#endregion
 	}

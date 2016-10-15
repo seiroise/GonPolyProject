@@ -22,7 +22,7 @@ namespace Scripts._Test1.UnitEditor.Component.UI {
 		/// <summary>
 		/// 初期化。こっちを使う
 		/// </summary>
-		public virtual void Initislize(UnitEditor unitEditor, UnitEditorUI editorUI) {
+		public virtual void Initialize(UnitEditor unitEditor, UnitEditorUI editorUI) {
 			base.Initialize(unitEditor);
 			this.editorUI = editorUI;
 		}

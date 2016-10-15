@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Scripts._Test1.UnitEditor.Common.Lerp {
@@ -8,17 +9,8 @@ namespace Scripts._Test1.UnitEditor.Common.Lerp {
 	/// </summary>
 	public abstract class UILerp<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
-		/// <summary>
-		/// トリガー
-		/// </summary>
-		public enum Trigger {
-			None,
-			EnterExit,
-			Click
-		}
-
 		public RectTransform target;
-		public Trigger trigger = Trigger.EnterExit;
+		public UILerpTrigger trigger = UILerpTrigger.EnterExit;
 
 		public T before;
 		public T after;
@@ -35,7 +27,7 @@ namespace Scripts._Test1.UnitEditor.Common.Lerp {
 		/// <summary>
 		/// "後"状態へ
 		/// </summary>
-		public abstract void ToAfter() {
+		public void ToAfter() {
 			SetLerpTarget(after);
 			toAfter = true;
 		}
@@ -43,7 +35,7 @@ namespace Scripts._Test1.UnitEditor.Common.Lerp {
 		/// <summary>
 		/// "前"状態へ
 		/// </summary>
-		public virtual void ToBefore() {
+		public void ToBefore() {
 			SetLerpTarget(before);
 			toAfter = false;
 		}
@@ -59,17 +51,17 @@ namespace Scripts._Test1.UnitEditor.Common.Lerp {
 		#region IPointerEvent
 
 		public void OnPointerEnter(PointerEventData eventData) {
-			if (trigger != Trigger.EnterExit) return;
+			if (trigger != UILerpTrigger.EnterExit) return;
 			ToAfter();
 		}
 
 		public void OnPointerExit(PointerEventData eventData) {
-			if (trigger != Trigger.EnterExit) return;
+			if (trigger != UILerpTrigger.EnterExit) return;
 			ToBefore();
 		}
 
 		public void OnPointerClick(PointerEventData eventData) {
-			if (trigger != Trigger.Click) return;
+			if (trigger != UILerpTrigger.Click) return;
 			if (toAfter) {
 				ToBefore();
 			} else {

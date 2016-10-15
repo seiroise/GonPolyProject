@@ -19,6 +19,13 @@ namespace Scripts._Test1.UnitEditor.Component {
 			this.unitEditor = unitEditor;
 		}
 
+		/// <summary>
+		/// 全てのコンポーネントの初期化後に呼ばれる
+		/// </summary>
+		public virtual void LateInitialize() {
+			
+		}
+
 		#endregion
 
 	}

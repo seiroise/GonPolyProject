@@ -34,5 +34,18 @@ namespace Scripts._Test1.UnitEditor.Common.Lerp {
 		}
 
 		#endregion
+
+		#region VirtualFunction
+
+		/// <summary>
+		/// ターゲットの設定
+		/// </summary>
+		protected override void SetLerpTarget(Vector2 lerpTarget) {
+			if (target == null) return;
+			xLerp.SetTarget(lockX ? target.sizeDelta.x : lerpTarget.x);
+			yLerp.SetTarget(lockY ? target.sizeDelta.y : lerpTarget.y);
+		}
+
+		#endregion
 	}
 }

@@ -10,9 +10,9 @@ namespace Scripts._Test1.UnitEditor.Component.Control {
 	public class UnitEditorControl : UnitEditorComponent {
 
 		[Header("ControlComponents")]
+		public UnitEditorControlComponent defaultComponent;	//標準コンポーネント
 		public List<UnitEditorControlComponent> components;	//登録コンポーネント
-		public UnitEditorControlComponent defalutComponent;	//標準コンポーネント
-		private Dictionary<Type, UnitEditorControlComponent> componentTable;	//コンポーネントテーブル
+		private Dictionary<string, UnitEditorControlComponent> componentTable;	//コンポーネントテーブル
 		private UnitEditorControlComponent activeComponent;	//有効コンポーネント
 
 		#region VirtualFunction
@@ -25,6 +25,19 @@ namespace Scripts._Test1.UnitEditor.Component.Control {
 			
 			//コンポーネントの初期化
 			InitializeControlComponents(components);
+
+			//標準コンポーネントの有効化
+			ActivateDefault();
+		}
+
+		/// <summary>
+		/// 後初期化
+		/// </summary>
+		public override void LateInitialize() {
+			base.LateInitialize();
+
+			//コンポーネントの後初期化
+			LateInitializeControlComponents(components);
 		}
 
 		#endregion
@@ -37,11 +50,10 @@ namespace Scripts._Test1.UnitEditor.Component.Control {
 		private void InitializeControlComponents(List<UnitEditorControlComponent> coms) {
 			if (coms == null) return;
 
-			//テーブル追加
-			componentTable = new Dictionary<Type,UnitEditorControlComponent>();
+			//テーブルに追加
+			componentTable = new Dictionary<string,UnitEditorControlComponent>();
 			for (int i = 0; i < coms.Count; ++i ) {
-				Type t = coms[i].GetType();
-				componentTable.Add(t, coms[i]);
+				componentTable.Add(coms[i].name, coms[i]);
 			}
 
 			//初期化
@@ -51,19 +63,37 @@ namespace Scripts._Test1.UnitEditor.Component.Control {
 		}
 
 		/// <summary>
+		/// コンポーネントの後初期化
+		/// </summary>
+		private void LateInitializeControlComponents(List<UnitEditorControlComponent> coms) {
+			if (coms == null) return;
+
+			//後初期化
+			for (int i = 0; i < coms.Count; ++i) {
+				coms[i].LateInitialize();
+			}
+		}
+
+		/// <summary>
 		/// 指定したコンポーネントの有効化
 		/// </summary>
-		public T ActivateControlComponent<T>() where T : UnitEditorControlComponent {
+		public void ActivateControlComponent(string name) {
 			//現在有効化されているコンポーネントの無効化
 			DisactivateControlComponent();
 			
 			//有効化するコンポーネントの取得
-			activeComponent = GetComponent<T>();
+			activeComponent = GetControlComponent(name);
 			if (activeComponent) {
 				activeComponent.Enter();
 			}
+		}
 
-			return (T)activeComponent;
+		/// <summary>
+		/// 標準コンポーネントの有効化
+		/// </summary>
+		public void ActivateDefault() {
+			if (!defaultComponent) return;
+			ActivateControlComponent(defaultComponent.name);
 		}
 
 		/// <summary>
@@ -78,10 +108,9 @@ namespace Scripts._Test1.UnitEditor.Component.Control {
 		/// <summary>
 		/// 指定したコンポーネントの取得
 		/// </summary>
-		public T GetControlComponent<T>() where T : UnitEditorControlComponent {
-			Type t = typeof(T);
-			if (!componentTable.ContainsKey(t)) return null;
-			return (T)componentTable[t];
+		public UnitEditorControlComponent GetControlComponent(string name) {
+			if (!componentTable.ContainsKey(name)) return null;
+			return componentTable[name];
 		}
 
 		#endregion
