@@ -8,5 +8,5 @@ namespace Scripts._Test.PolyPartsEditor.UI.ColorEditor {
 	/// ColorEditFieldで使うイベント
 	/// </summary>
 	[Serializable]
-	class ColorEditorEvent : UnityEvent<Color> { }
+	public class ColorEditorEvent : UnityEvent<Color> { }
 }

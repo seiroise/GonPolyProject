@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using System.Collections.Generic;
 
 namespace Seiro.Scripts.Geometric {
 	/// <summary>
@@ -86,6 +86,31 @@ namespace Seiro.Scripts.Geometric {
 			} else {
 				return false;
 			}
+		}
+
+		/// <summary>
+		/// 頂点群の包括矩形を求める
+		/// </summary>
+		public static Rect CalculateRect(List<Vector2> vertices) {
+			float xmin, ymin, xmax, ymax;
+			xmin = xmax = vertices[0].x;
+			ymin = ymax = vertices[0].y;
+
+			for (int i = 1; i < vertices.Count; ++i) {
+				Vector2 p = vertices[i];
+				if (xmin > p.x) {
+					xmin = p.x;
+				} else if(xmax < p.x){
+					xmax = p.x;
+				}
+				if (ymin > p.y) {
+					ymin = p.y;
+				} else if(ymax < p.y){
+					ymax = p.y;
+				}
+			}
+
+			return new Rect(xmin, ymin, xmax - xmin, ymax - ymin);
 		}
 	}
 }

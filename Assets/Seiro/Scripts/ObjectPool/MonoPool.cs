@@ -38,11 +38,14 @@ namespace Seiro.Scripts.ObjectPool {
 		/// 追加
 		/// </summary>
 		protected void Add(int num) {
+			if (poolItem == null) return;
 			//生成して追加
 			for(int i = 0; i < num; ++i) {
 				T item = Instantiate<T>(poolItem.GetThis());
 				item.gameObject.SetActive(false);
 				item.transform.SetParent(transform);
+				//初期化
+				item.Initialize();
 				pool.Add(item);
 			}
 		}
@@ -85,7 +88,7 @@ namespace Seiro.Scripts.ObjectPool {
 		/// </summary>
 		public T PopItem(Vector3 position) {
 			T item = Pop();
-			item.transform.position = position;
+			item.transform.localPosition = position;
 			item.Activate();
 			return item;
 		}
@@ -96,7 +99,7 @@ namespace Seiro.Scripts.ObjectPool {
 		public List<T> PopItems(int num, Vector3 position) {
 			List<T> items = Pop(num);
 			for(int i = 0; i < items.Count; ++i) {
-				items[i].transform.position = position;
+				items[i].transform.localPosition = position;
 				items[i].Activate();
 			}
 			return items;

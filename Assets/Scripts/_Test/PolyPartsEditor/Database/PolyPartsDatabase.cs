@@ -13,7 +13,11 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		public PolyPartsObject prefab;
 
 		[Header("Callback")]
+		public PolyPartsObjectEvent onPolyObjInstantiated;
+		public PolyPartsObjectEvent onPolyObjDeleted;
 		public PolyPartsObjectEvent onPolyObjClicked;
+		public PolyPartsObjectEvent onPolyObjVertexChanged;
+		public PolyPartsObjectEvent onPolyObjColorChanged;
 
 		//内部パラメータ
 		private List<PolyPartsObject> polyObjs;
@@ -31,13 +35,14 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// <summary>
 		/// ポリゴンオブジェクトの生成
 		/// </summary>
-		public PolyPartsObject InstantiatePolygon(List<Vector2> vertices) {
+		public PolyPartsObject InstantiatePolyObj(List<Vector2> vertices) {
 			PolyPartsObject polyObj = Instantiate<PolyPartsObject>(prefab);
-			polyObj.transform.SetParent(transform);
+
+			//transformなどの設定
 			polyObj.SetVertices(vertices);
-			polyObj.onClick.AddListener(OnPolyObjClicked);
-			//追加
-			polyObjs.Add(polyObj);
+
+			//初期化
+			InitializePolyObj(polyObj);
 
 			return polyObj;
 		}
@@ -47,11 +52,31 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// </summary>
 		public PolyPartsObject InstantiateClone(PolyPartsObject polyObj, Vector2 point) {
 			PolyPartsObject clone = polyObj.InstantiateClone(point);
-			clone.onClick.AddListener(OnPolyObjClicked);
-			//追加
-			polyObjs.Add(clone);
+
+			//初期化
+			InitializePolyObj(clone);
 
 			return clone;
+		}
+
+		/// <summary>
+		/// ポリゴンオブジェクトの初期化
+		/// </summary>
+		private void InitializePolyObj(PolyPartsObject polyObj) {
+
+			//親の設定
+			polyObj.transform.SetParent(transform);
+
+			//追加
+			polyObjs.Add(polyObj);
+
+			//コールバック設定
+			polyObj.onClick.AddListener(OnPolyObjClicked);
+			polyObj.onVertexChanged.AddListener(OnPolyObjVertexChanged);
+			polyObj.onColorChanged.AddListener(OnPolyObjColorChanged);
+
+			//コールバック
+			onPolyObjInstantiated.Invoke(polyObj);
 		}
 
 		/// <summary>
@@ -59,6 +84,9 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// </summary>
 		public void DeletePolyPartsObject(PolyPartsObject polyObj) {
 			if(polyObjs.Remove(polyObj)) {
+				//コールバック
+				onPolyObjDeleted.Invoke(polyObj);
+				//削除
 				Destroy(polyObj.gameObject);
 			}
 		}
@@ -106,6 +134,20 @@ namespace Scripts._Test.PolyPartsEditor.Database {
 		/// </summary>
 		private void OnPolyObjClicked(PolyPartsObject polyObj) {
 			onPolyObjClicked.Invoke(polyObj);
+		}
+
+		/// <summary>
+		/// ポリゴンオブジェクトの頂点変更
+		/// </summary>
+		private void OnPolyObjVertexChanged(PolyPartsObject polyObj) {
+			onPolyObjVertexChanged.Invoke(polyObj);
+		}
+
+		/// <summary>
+		/// ポリゴンオブジェクトの色変更
+		/// </summary>
+		private void OnPolyObjColorChanged(PolyPartsObject polyObj) {
+			onPolyObjColorChanged.Invoke(polyObj);
 		}
 
 		#endregion

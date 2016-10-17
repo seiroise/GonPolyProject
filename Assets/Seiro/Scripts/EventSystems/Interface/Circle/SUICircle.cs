@@ -68,19 +68,6 @@ namespace Seiro.Scripts.EventSystems.Interface.Circle {
 
 		#region UnityEvent
 
-		private void Awake() {
-			mf = GetComponent<MeshFilter>();
-			mc = GetComponent<MeshCollider>();
-
-			circle = new CircleFragment();
-
-			lerpColor = new LerpColor();
-
-			if(lerpSprite) {
-				lerpSprite.transform.localScale = Vector3.zero;
-			}
-		}
-
 		private void Update() {
 			if(circle == null) return;
 			UpdateFragment();
@@ -180,7 +167,7 @@ namespace Seiro.Scripts.EventSystems.Interface.Circle {
 
 			//スプライトの表示
 			if(lerpSprite != null) {
-				lerpSprite.SetAlphas(0f, 1f);
+				lerpSprite.SetTargetAlpha(1f);
 			}
 
 			visibled = true;
@@ -199,7 +186,7 @@ namespace Seiro.Scripts.EventSystems.Interface.Circle {
 
 			//スプライトの非表示
 			if(lerpSprite != null) {
-				lerpSprite.SetAlphaTarget(0f);
+				lerpSprite.SetTargetAlpha(0f);
 			}
 
 			visibled = false;
@@ -276,6 +263,19 @@ namespace Seiro.Scripts.EventSystems.Interface.Circle {
 		#endregion
 
 		#region IMonoPoolItem
+
+		public void Initialize() {
+			mf = GetComponent<MeshFilter>();
+			mc = GetComponent<MeshCollider>();
+
+			circle = new CircleFragment();
+
+			lerpColor = new LerpColor();
+
+			if(lerpSprite) {
+				lerpSprite.transform.localScale = Vector3.zero;
+			}
+		}
 
 		public void Activate() {
 			Visible();

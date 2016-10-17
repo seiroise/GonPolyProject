@@ -38,7 +38,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 			editor.database.EnablePolygons();
 			//ポリゴンの生成
 			if(vertices != null) {
-				editor.database.InstantiatePolygon(vertices);
+				editor.database.InstantiatePolyObj(vertices);
 			}
 		}
 

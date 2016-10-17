@@ -69,7 +69,7 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 			DisactivateComponent();
 			//デフォルトサイドメニューの表示
 			editor.ui.sideMenu.IndicateDefaultUI();
-			//選択以外を無効化
+			//選択以外を有効化
 			editor.database.EnablePolygons();
 			//登録してあるコールバックの設定変更
 			editor.database.onPolyObjClicked.AddListener(OnPolyObjClicked);

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 6e623e0bd1c3e024d8588dcda67bc67c
-timeCreated: 1475939092
+guid: 4496507d98b183040bff5c18d7b17dad
+timeCreated: 1476615917
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -56,6 +56,8 @@ TextureImporter:
     21300098: editor_icon_49
     21300100: editor_icon_50
     21300102: editor_icon_51
+    21300104: editor_icon_52
+    21300106: editor_icon_53
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -316,8 +318,8 @@ TextureImporter:
       name: editor_icon_16
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1344
+        x: 896
+        y: 1568
         width: 224
         height: 224
       alignment: 0
@@ -329,7 +331,7 @@ TextureImporter:
       name: editor_icon_17
       rect:
         serializedVersion: 2
-        x: 224
+        x: 0
         y: 1344
         width: 224
         height: 224
@@ -342,7 +344,7 @@ TextureImporter:
       name: editor_icon_18
       rect:
         serializedVersion: 2
-        x: 448
+        x: 224
         y: 1344
         width: 224
         height: 224
@@ -355,7 +357,7 @@ TextureImporter:
       name: editor_icon_19
       rect:
         serializedVersion: 2
-        x: 672
+        x: 448
         y: 1344
         width: 224
         height: 224
@@ -368,7 +370,7 @@ TextureImporter:
       name: editor_icon_20
       rect:
         serializedVersion: 2
-        x: 896
+        x: 672
         y: 1344
         width: 224
         height: 224
@@ -381,7 +383,7 @@ TextureImporter:
       name: editor_icon_21
       rect:
         serializedVersion: 2
-        x: 1120
+        x: 896
         y: 1344
         width: 224
         height: 224
@@ -394,8 +396,8 @@ TextureImporter:
       name: editor_icon_22
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1120
+        x: 1120
+        y: 1344
         width: 224
         height: 224
       alignment: 0
@@ -407,7 +409,7 @@ TextureImporter:
       name: editor_icon_23
       rect:
         serializedVersion: 2
-        x: 224
+        x: 0
         y: 1120
         width: 224
         height: 224
@@ -420,7 +422,7 @@ TextureImporter:
       name: editor_icon_24
       rect:
         serializedVersion: 2
-        x: 448
+        x: 224
         y: 1120
         width: 224
         height: 224
@@ -433,7 +435,7 @@ TextureImporter:
       name: editor_icon_25
       rect:
         serializedVersion: 2
-        x: 1120
+        x: 448
         y: 1120
         width: 224
         height: 224
@@ -446,8 +448,8 @@ TextureImporter:
       name: editor_icon_26
       rect:
         serializedVersion: 2
-        x: 0
-        y: 896
+        x: 1120
+        y: 1120
         width: 224
         height: 224
       alignment: 0
@@ -459,7 +461,7 @@ TextureImporter:
       name: editor_icon_27
       rect:
         serializedVersion: 2
-        x: 224
+        x: 0
         y: 896
         width: 224
         height: 224
@@ -472,7 +474,7 @@ TextureImporter:
       name: editor_icon_28
       rect:
         serializedVersion: 2
-        x: 448
+        x: 224
         y: 896
         width: 224
         height: 224
@@ -485,7 +487,7 @@ TextureImporter:
       name: editor_icon_29
       rect:
         serializedVersion: 2
-        x: 672
+        x: 448
         y: 896
         width: 224
         height: 224
@@ -498,7 +500,7 @@ TextureImporter:
       name: editor_icon_30
       rect:
         serializedVersion: 2
-        x: 896
+        x: 672
         y: 896
         width: 224
         height: 224
@@ -511,7 +513,7 @@ TextureImporter:
       name: editor_icon_31
       rect:
         serializedVersion: 2
-        x: 1120
+        x: 896
         y: 896
         width: 224
         height: 224
@@ -524,8 +526,8 @@ TextureImporter:
       name: editor_icon_32
       rect:
         serializedVersion: 2
-        x: 0
-        y: 672
+        x: 1120
+        y: 896
         width: 224
         height: 224
       alignment: 0
@@ -537,7 +539,7 @@ TextureImporter:
       name: editor_icon_33
       rect:
         serializedVersion: 2
-        x: 224
+        x: 0
         y: 672
         width: 224
         height: 224
@@ -550,7 +552,7 @@ TextureImporter:
       name: editor_icon_34
       rect:
         serializedVersion: 2
-        x: 448
+        x: 224
         y: 672
         width: 224
         height: 224
@@ -563,7 +565,7 @@ TextureImporter:
       name: editor_icon_35
       rect:
         serializedVersion: 2
-        x: 672
+        x: 448
         y: 672
         width: 224
         height: 224
@@ -576,7 +578,7 @@ TextureImporter:
       name: editor_icon_36
       rect:
         serializedVersion: 2
-        x: 896
+        x: 672
         y: 672
         width: 224
         height: 224
@@ -589,7 +591,7 @@ TextureImporter:
       name: editor_icon_37
       rect:
         serializedVersion: 2
-        x: 1120
+        x: 896
         y: 672
         width: 224
         height: 224
@@ -602,8 +604,8 @@ TextureImporter:
       name: editor_icon_38
       rect:
         serializedVersion: 2
-        x: 0
-        y: 448
+        x: 1120
+        y: 672
         width: 224
         height: 224
       alignment: 0
@@ -615,7 +617,7 @@ TextureImporter:
       name: editor_icon_39
       rect:
         serializedVersion: 2
-        x: 224
+        x: 0
         y: 448
         width: 224
         height: 224
@@ -628,7 +630,7 @@ TextureImporter:
       name: editor_icon_40
       rect:
         serializedVersion: 2
-        x: 448
+        x: 224
         y: 448
         width: 224
         height: 224
@@ -641,7 +643,7 @@ TextureImporter:
       name: editor_icon_41
       rect:
         serializedVersion: 2
-        x: 672
+        x: 448
         y: 448
         width: 224
         height: 224
@@ -654,8 +656,8 @@ TextureImporter:
       name: editor_icon_42
       rect:
         serializedVersion: 2
-        x: 0
-        y: 224
+        x: 672
+        y: 448
         width: 224
         height: 224
       alignment: 0
@@ -667,8 +669,8 @@ TextureImporter:
       name: editor_icon_43
       rect:
         serializedVersion: 2
-        x: 224
-        y: 224
+        x: 896
+        y: 448
         width: 224
         height: 224
       alignment: 0
@@ -680,7 +682,7 @@ TextureImporter:
       name: editor_icon_44
       rect:
         serializedVersion: 2
-        x: 448
+        x: 0
         y: 224
         width: 224
         height: 224
@@ -693,7 +695,7 @@ TextureImporter:
       name: editor_icon_45
       rect:
         serializedVersion: 2
-        x: 672
+        x: 224
         y: 224
         width: 224
         height: 224
@@ -706,7 +708,7 @@ TextureImporter:
       name: editor_icon_46
       rect:
         serializedVersion: 2
-        x: 896
+        x: 448
         y: 224
         width: 224
         height: 224
@@ -719,7 +721,7 @@ TextureImporter:
       name: editor_icon_47
       rect:
         serializedVersion: 2
-        x: 1120
+        x: 672
         y: 224
         width: 224
         height: 224
@@ -732,6 +734,32 @@ TextureImporter:
       name: editor_icon_48
       rect:
         serializedVersion: 2
+        x: 896
+        y: 224
+        width: 224
+        height: 224
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: editor_icon_49
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 224
+        width: 224
+        height: 224
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: editor_icon_50
+      rect:
+        serializedVersion: 2
         x: 0
         y: 0
         width: 224
@@ -742,7 +770,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: editor_icon_49
+      name: editor_icon_51
       rect:
         serializedVersion: 2
         x: 224
@@ -755,7 +783,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: editor_icon_50
+      name: editor_icon_52
       rect:
         serializedVersion: 2
         x: 448
@@ -768,7 +796,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: editor_icon_51
+      name: editor_icon_53
       rect:
         serializedVersion: 2
         x: 1120

@@ -18,20 +18,6 @@ namespace Scripts._Test.PolyPartsEditor.Component.Adjuster {
 			this.adjustMenu = adjuster.AdjustMenu;
 		}
 
-		/// <summary>
-		/// 開始
-		/// </summary>
-		public virtual void Enter() {
-			
-		}
-
-		/// <summary>
-		/// 終了
-		/// </summary>
-		public virtual void Exit() {
-			
-		}
-
 		#endregion
 	}
 }

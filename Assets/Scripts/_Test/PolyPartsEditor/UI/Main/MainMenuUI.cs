@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Scripts._Test.PolyPartsEditor.UI.HideIndicate;
+using Scripts._Test.PolyPartsEditor.Common;
 
 namespace Scripts._Test.PolyPartsEditor.UI.Main {
 	
@@ -21,5 +22,6 @@ namespace Scripts._Test.PolyPartsEditor.UI.Main {
 		public Button configBtn;
 
 		public Button exitBtn;
+
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 namespace Seiro.Scripts.EventSystems {
@@ -8,14 +9,15 @@ namespace Seiro.Scripts.EventSystems {
 	/// </summary>
 	public class CollisionEventSystem : MonoBehaviour {
 
-		//レイキャスト用カメラ
+		[Header("Parameter")]
 		[SerializeField]
-		private Camera camera;
+		private Camera camera;				//レイキャスト用カメラ
+		[SerializeField]
+		private int mouseButton = 0;		//クリック判定を行うボタン
+		private Collider downCollider;		//押した時のコライダ
 
-		//クリック判定
-		[SerializeField]
-		private int mouseButton = 0;
-		private Collider downCollider;	//押した時のコライダ
+		[Header("PriorityEventSystem")]
+		public EventSystem prioritySystem;	//優位なイベントシステム
 
 		//その他
 		private Collider prevCollider;
@@ -43,29 +45,47 @@ namespace Seiro.Scripts.EventSystems {
 		/// 重なり確認
 		/// </summary>
 		private void CheckHighlight(Vector2 screenPos) {
-			Ray ray = camera.ScreenPointToRay(screenPos);
-			RaycastHit hit;
-			if(Physics.Raycast(ray, out hit, 100f)) {
-				//ヒットした場合
-				Collider hitCollider = hit.collider;
-				hitInfo = hit;
-				if(prevCollider != hitCollider) {
-					if(prevCollider == null) {
-						//Enter
-						EnterCollider(hitCollider);
-					} else {
-						//Exit & Enter
-						ExitCollider(prevCollider);
-						EnterCollider(hitCollider);
-					}
-				}
+			if (!camera) return;
+			if (prioritySystem && prioritySystem.IsPointerOverGameObject()) {
+				NohitCollider();
 			} else {
-				//ヒットしなかった場合
-				if(prevCollider != null) {
-					//Exit
-					ExitCollider(prevCollider);
+				Ray ray = camera.ScreenPointToRay(screenPos);
+				RaycastHit hit;
+				if (Physics.Raycast(ray, out hit, 100f)) {
+					//ヒットした場合
+					Collider hitCollider = hit.collider;
+					HitCollider(hitCollider);
+				} else {
+					//ヒットしなかった場合
+					NohitCollider();
 				}
 				hitInfo = hit;
+			}
+		}
+
+		/// <summary>
+		/// コライダに当たった
+		/// </summary>
+		private void HitCollider(Collider hitCollider) {
+			if (prevCollider != hitCollider) {
+				if (prevCollider == null) {
+					//Enter
+					EnterCollider(hitCollider);
+				} else {
+					//Exit & Enter
+					ExitCollider(prevCollider);
+					EnterCollider(hitCollider);
+				}
+			}
+		}
+
+		/// <summary>
+		/// コライダに当たらなかった
+		/// </summary>
+		private void NohitCollider() {
+			if (prevCollider != null) {
+				//Exit
+				ExitCollider(prevCollider);
 			}
 		}
 

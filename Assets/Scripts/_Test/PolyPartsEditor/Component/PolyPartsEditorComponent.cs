@@ -9,6 +9,8 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 
 		protected PolyPartsEditor editor;
 
+		#region VirtualFunction
+
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -16,5 +18,20 @@ namespace Scripts._Test.PolyPartsEditor.Component {
 			this.editor = editor;
 		}
 
+		/// <summary>
+		/// 開始
+		/// </summary>
+		public virtual void Enter() {
+
+		}
+
+		/// <summary>
+		/// 終了
+		/// </summary>
+		public virtual void Exit() {
+
+		}
+
+		#endregion
 	}
 }

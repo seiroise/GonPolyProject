@@ -27,6 +27,15 @@ namespace Seiro.Scripts.Graphics {
 			this.indices = indices;
 		}
 
+		public EasyMesh(EasyMesh src) {
+			this.verts = new Vector3[src.verts.Length];
+			this.colors = new Color[src.colors.Length];
+			this.indices = new int[src.indices.Length];
+			src.verts.CopyTo(this.verts, 0);
+			src.colors.CopyTo(this.colors, 0);
+			src.indices.CopyTo(this.indices, 0);
+		}
+
 		#endregion
 
 		#region Function
@@ -43,6 +52,24 @@ namespace Seiro.Scripts.Graphics {
 			mesh.RecalculateBounds();
 			mesh.RecalculateNormals();
 			return mesh;
+		}
+
+		/// <summary>
+		/// 色の設定
+		/// </summary>
+		public void SetColor(Color color) {
+			for(int i = 0; i< colors.Length; ++i) {
+				colors[i] = color;
+			}
+		}
+
+		/// <summary>
+		/// 拡大縮小
+		/// </summary>
+		public void Scaling(float scale) {
+			for (int i = 0; i < verts.Length; ++i) {
+				verts[i] *= scale;
+			}
 		}
 
 		#endregion
