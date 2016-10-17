@@ -20,6 +20,14 @@ namespace Scripts._Test1.UnitEditor.Component.StateMachine {
 		#region VirtualFunction
 
 		/// <summary>
+		/// 使わない
+		/// </summary>
+		[Obsolete]
+		public override void Initialize(UnitEditor unitEditor) {
+			Initialize(unitEditor, null);
+		}
+
+		/// <summary>
 		/// 初期化
 		/// </summary>
 		public override void Initialize(UnitEditor unitEditor, UnitEditorStateMachine owner) {
@@ -103,7 +111,8 @@ namespace Scripts._Test1.UnitEditor.Component.StateMachine {
 		/// 指定した状態の有効化
 		/// </summary>
 		public void ActivateState(string name) {
-			if (!active) return;
+			//アクティブでなければ有効化しない
+			if (!activated) return;
 			//現在の状態
 			bool prevNull = (activeState == null);
 
@@ -134,6 +143,14 @@ namespace Scripts._Test1.UnitEditor.Component.StateMachine {
 			OnDisactivateState();
 			activeState.Exit();
 			activeState = null;
+		}
+
+		/// <summary>
+		/// この状態の無効化
+		/// </summary>
+		public void DisactivateThis() {
+			if (!owner) return;
+			owner.DisactivateState();
 		}
 
 		/// <summary>

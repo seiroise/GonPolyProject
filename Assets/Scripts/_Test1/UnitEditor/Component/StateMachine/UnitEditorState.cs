@@ -14,8 +14,9 @@ namespace Scripts._Test1.UnitEditor.Component.StateMachine {
 		//状態の持ち主
 		protected UnitEditorStateMachine owner;
 
-		//状態が有効か
-		protected bool active = false;
+		//有効化されているか
+		protected bool activated = false;
+		public bool Activated { get { return activated; } }
 
 		#region VirtualFunction
 
@@ -40,11 +41,11 @@ namespace Scripts._Test1.UnitEditor.Component.StateMachine {
 		#region IState メンバー
 
 		public virtual void Enter() {
-			active = true;
+			activated = true;
 		}
 
 		public virtual void Exit() {
-			active = false;
+			activated = false;
 		}
 
 		#endregion

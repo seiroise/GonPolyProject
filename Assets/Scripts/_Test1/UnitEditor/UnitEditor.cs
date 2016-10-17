@@ -1,10 +1,11 @@
-﻿using UnityEngine;
-using Scripts._Test1.UnitEditor.Component;
+﻿using Scripts._Test1.UnitEditor.Component;
 using Scripts._Test1.UnitEditor.Component.Control;
-using Scripts._Test1.UnitEditor.Component.UI;
-using Scripts._Test1.UnitEditor.Component.Utility.PolyLine;
-using Scripts._Test1.UnitEditor.Component.Utility.Database;
 using Scripts._Test1.UnitEditor.Component.StateMachine;
+using Scripts._Test1.UnitEditor.Component.UI;
+using Scripts._Test1.UnitEditor.Component.Utility.Database;
+using Scripts._Test1.UnitEditor.Component.Utility.Marker;
+using Scripts._Test1.UnitEditor.Component.Utility.PolyLine;
+using UnityEngine;
 
 namespace Scripts._Test1.UnitEditor {
 
@@ -22,6 +23,7 @@ namespace Scripts._Test1.UnitEditor {
 		[Header("Utilitys")]
 		public UnitEditorPolyLine polyLine;
 		public UnitEditorDatabase database;
+		public UnitEditorMarker marker;
 
 		#region UnityEvent
 
@@ -45,10 +47,13 @@ namespace Scripts._Test1.UnitEditor {
 				ui.Initialize(this);
 			}
 			if (polyLine) {
-				polyLine.Initialize(this);
+				polyLine.Initialize(this, null);
 			}
 			if (database) {
 				database.Initialize(this);
+			}
+			if (marker) {
+				marker.Initialize(this);
 			}
 		}
 
@@ -67,6 +72,9 @@ namespace Scripts._Test1.UnitEditor {
 			}
 			if (database) {
 				database.LateInitialize();
+			}
+			if (marker) {
+				marker.LateInitialize();
 			}
 		}
 

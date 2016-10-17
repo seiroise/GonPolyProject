@@ -10,7 +10,7 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 	/// ユニットエディタのポリライン描画
 	/// </summary>
 	[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-	public class UnitEditorPolyLineRenderer : UnitEditorPolyLineComponent {
+	public class UnitEditorPolyLineRenderer : UnitEditorComponent {
 
 		[Header("LineParameter")]
 		public float width = 0.1f;
@@ -31,8 +31,8 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 
 		#region VirtualFunction
 
-		public override void Initialize(UnitEditor unitEditor, UnitEditorPolyLine polyLine) {
-			base.Initialize(unitEditor, polyLine);
+		public override void Initialize(UnitEditor unitEditor) {
+			base.Initialize(unitEditor);
 
 			mainLine = new PolyLine2D();
 			subLine = new PolyLine2D();

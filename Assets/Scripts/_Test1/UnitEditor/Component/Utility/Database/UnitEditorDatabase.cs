@@ -36,9 +36,9 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		#region Function
 
 		/// <summary>
-		/// ポリゴンオブジェクトの初期化
+		/// パーツの初期化
 		/// </summary>
-		private void InitializePolyObj(PartsObject partsObj) {
+		private void InitializeParts(PartsObject partsObj) {
 			//親の設定
 			partsObj.transform.SetParent(transform);
 			//追加
@@ -51,15 +51,15 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		}
 
 		/// <summary>
-		/// ポリゴンオブジェクトの生成
+		/// パーツの生成
 		/// </summary>
-		public PartsObject InstantiatePolyObj(List<Vector2> vertices, Color color) {
+		public PartsObject InstantiateParts(List<Vector2> vertices, Color color) {
 			//生成と頂点の設定
 			PartsObject partsObj = Instantiate<PartsObject>(prefab);
 			partsObj.SetVertices(vertices, color);
 
 			//初期化
-			InitializePolyObj(partsObj);
+			InitializeParts(partsObj);
 
 			//コールバック
 			onInstantiateParts.Invoke(partsObj);
@@ -68,9 +68,9 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		}
 
 		/// <summary>
-		/// ポリゴンオブジェクトの削除
+		/// パーツの削除
 		/// </summary>
-		public void DeletePolyPartsObject(PartsObject partsObj) {
+		public void DeleteParts(PartsObject partsObj) {
 			if (partsObjs.Remove(partsObj)) {
 				//コールバック
 				onDeleteParts.Invoke(partsObj);
@@ -80,20 +80,20 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		}
 
 		/// <summary>
-		/// 全てのポリゴンを有効化する
+		/// 全てのパーツを有効化する
 		/// </summary>
-		public void EnablePolygons() {
+		public void EnableParts(PartsObject ignore = null) {
 			for (int i = 0; i < partsObjs.Count; ++i) {
-				partsObjs[i].Enable();
+				if (ignore != partsObjs[i]) partsObjs[i].Enable();
 			}
 		}
 
 		/// <summary>
-		/// 全てのポリゴンを無効化する
+		/// 全てのパーツを無効化する
 		/// </summary>
-		public void DisablePolygons() {
+		public void DisableParts(PartsObject ignore = null) {
 			for (int i = 0; i < partsObjs.Count; ++i) {
-				partsObjs[i].Disable();
+				if(ignore != partsObjs[i]) partsObjs[i].Disable();
 			}
 		}
 
