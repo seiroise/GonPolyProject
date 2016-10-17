@@ -1,4 +1,5 @@
-﻿using Seiro.Scripts.Graphics.PolyLine2D.Snap;
+﻿using Scripts._Test1.UnitEditor.Component.StateMachine;
+using Seiro.Scripts.Graphics.PolyLine2D.Snap;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,18 +8,12 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 	/// <summary>
 	/// ユニットエディタのポリライン作成
 	/// </summary>
-	public class UnitEditorPolyLineMaker : UnitEditorPolyLineStateComponent {
+	public class UnitEditorPolyLineMaker : UnitEditorState {
 
 		[Header("InputParameter")]
 		public int addButton = 0;				//追加ボタン
 		public int removeButton = 1;			//削除ボタン
 		public KeyCode escKey = KeyCode.Escape;	//全削除/戻るボタン
-
-		private UnitEditorPolyLineRenderer renderer;	//描画担当
-		private UnitEditorPolyLineSnapper snapper;		//座標のスナップ担当
-
-		private bool ended = false;				//終了フラグ
-		private const float EPSILON = 0.01f;	//マウス移動差分の検出閾値
 
 		[Header("Parameter")]
 		public bool continuing = true;			//続けて描画する場合
@@ -26,17 +21,33 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 		[Header("Callback")]
 		public PolyLineEvent onMakeEnd;
 
+		//PolyLineコンポーネント
+		private UnitEditorPolyLine polyLine;
+		private UnitEditorPolyLineRenderer renderer;	//描画担当
+		private UnitEditorPolyLineSnapper snapper;		//座標のスナップ担当
+
+		private bool ended = false;				//終了フラグ
+		private const float EPSILON = 0.01f;	//マウス移動差分の検出閾値
+
 		#region UnityEvent
 
 		private void Update() {
-			if (active) {
-				InputCheck();
-			}
+			if (!activated) return;
+			InputCheck();
 		}
 
 		#endregion
 
 		#region VirtualFunction
+
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		public override void Initialize(UnitEditor unitEditor, UnitEditorStateMachine owner) {
+			base.Initialize(unitEditor, owner);
+
+			polyLine = (UnitEditorPolyLine)owner;
+		}
 
 		/// <summary>
 		/// 遅延初期化
@@ -56,6 +67,15 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 			base.Enter();
 
 			ended = false;
+		}
+
+		public override void Exit() {
+			base.Exit();
+
+			//描画
+			renderer.Clear();
+			//スナップ
+			SetSnap();
 		}
 
 		#endregion
@@ -100,6 +120,8 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 				snapper.CallPrevSnap();
 				//その結果終了フラグが立った場合
 				if (ended) {
+					//追加
+					renderer.Add(mPoint);
 					//終了
 					End(false);
 					return;
@@ -203,7 +225,7 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 
 			//無効化
 			if (forceEnd || !continuing) {
-				polyLine.DisactivateStateComponent();
+				polyLine.DisactivateState();
 			}
 
 			//終了フラグを下ろす

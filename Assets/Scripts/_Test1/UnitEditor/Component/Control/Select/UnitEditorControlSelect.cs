@@ -43,7 +43,7 @@ namespace Scripts._Test1.UnitEditor.Component.Control.Select {
 			base.Enter();
 			
 			//全てのパーツを有効化
-			database.EnablePolygons();
+			database.EnableParts();
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace Scripts._Test1.UnitEditor.Component.Control.Select {
 			base.Exit();
 
 			//全てのパーツを無効化
-			database.DisablePolygons();
+			database.DisableParts();
 		}
 
 		#endregion

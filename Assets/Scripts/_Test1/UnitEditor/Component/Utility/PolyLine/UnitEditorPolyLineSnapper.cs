@@ -10,7 +10,7 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 	/// ユニットエディタのポリラインスナッパー
 	/// </summary>
 	[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-	public class UnitEditorPolyLineSnapper : UnitEditorPolyLineComponent {
+	public class UnitEditorPolyLineSnapper : UnitEditorComponent {
 
 		/// <summary>
 		/// 優先度付きスナップ
@@ -42,8 +42,8 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 		/// <summary>
 		/// 初期化
 		/// </summary>
-		public override void Initialize(UnitEditor unitEditor, UnitEditorPolyLine polyLine) {
-			base.Initialize(unitEditor, polyLine);
+		public override void Initialize(UnitEditor unitEditor) {
+			base.Initialize(unitEditor);
 
 			mf = GetComponent<MeshFilter>();
 			snaps = new List<PrioritySnap>();

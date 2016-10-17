@@ -45,7 +45,6 @@ namespace Seiro.Scripts.Geometric.Polygon.Concave {
 				if(distance > maxDistance) {
 					maxDistance = distance;
 					index = i;
-					Debug.Log("Update Max");
 				}
 			}
 			mostFarIndex = index;
@@ -55,7 +54,6 @@ namespace Seiro.Scripts.Geometric.Polygon.Concave {
 			Vector2 p1 = points[index];
 			Vector2 p2 = points[(index + 1) % size];
 			mostFarCross = GeomUtil.CCW(p0, p1, p2);
-			Debug.Log("MostFarIndex = [" + index + "] : CCW = " + mostFarCross);
 
 			//頂点リストの作成
 			vertices = new List<PolygonVertex>();

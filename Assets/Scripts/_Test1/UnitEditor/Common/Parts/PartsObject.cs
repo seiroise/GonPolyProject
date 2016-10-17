@@ -124,7 +124,7 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		#region PublicFunction
 
 		/// <summary>
-		/// 頂点の設定。始点と終点は離れていること
+		/// 頂点の設定。始点と終点が結ばれていること
 		/// </summary>
 		public void SetVertices(List<Vector2> vertices, Color color) {
 			//包括矩形から原点からのオフセットを求め適用する
@@ -138,8 +138,10 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 			//改めて包括矩形を求める
 			inclusionRect = GeomUtil.CalculateRect(vertices);
 			//ポリゴンの生成
+			//末尾を削除(一時的)
+			vertices.RemoveAt(vertices.Count - 1);
 			polygon = new ConcavePolygon(vertices);
-			//末尾に戦闘を追加
+			//末尾に先頭を追加
 			vertices.Add(vertices[0]);
 
 			//簡易メッシュの確保
@@ -160,6 +162,19 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		/// </summary>
 		public void SetVertices(List<Vector2> vertices) {
 			SetVertices(vertices, polygonColor);
+		}
+
+		/// <summary>
+		/// 頂点の取得
+		/// </summary>
+		public List<Vector2> GetVertices() {
+			List<Vector2> vertices = new List<Vector2>();
+			//オフセットを加える
+			Vector2 offset = transform.localPosition;
+			for (int i = 0; i < this.vertices.Count; ++i) {
+				vertices.Add(this.vertices[i] + offset);
+			}
+			return vertices;
 		}
 
 		/// <summary>
