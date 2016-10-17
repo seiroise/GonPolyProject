@@ -4,6 +4,7 @@ using Scripts._Test1.UnitEditor.Component.Control;
 using Scripts._Test1.UnitEditor.Component.UI;
 using Scripts._Test1.UnitEditor.Component.Utility.PolyLine;
 using Scripts._Test1.UnitEditor.Component.Utility.Database;
+using Scripts._Test1.UnitEditor.Component.StateMachine;
 
 namespace Scripts._Test1.UnitEditor {
 
@@ -13,7 +14,7 @@ namespace Scripts._Test1.UnitEditor {
 	public class UnitEditor : UnitEditorComponent {
 
 		[Header("Control")]
-		public UnitEditorControl controller;
+		public UnitEditorStateMachine control;
 
 		[Header("UI")]
 		public UnitEditorUI ui;
@@ -37,8 +38,8 @@ namespace Scripts._Test1.UnitEditor {
 			base.Initialize(unitEditor);
 
 			//componentの初期化
-			if (controller) {
-				controller.Initialize(this);
+			if (control) {
+				control.Initialize(this, null);
 			}
 			if (ui) {
 				ui.Initialize(this);
@@ -55,8 +56,8 @@ namespace Scripts._Test1.UnitEditor {
 			base.LateInitialize();
 
 			//componentの遅延初期化
-			if (controller) {
-				controller.LateInitialize();
+			if (control) {
+				control.LateInitialize();
 			}
 			if (ui) {
 				ui.LateInitialize();

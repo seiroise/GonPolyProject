@@ -12,6 +12,7 @@ namespace Seiro.Scripts.Utility {
 		public Color Value { get { return value; } }
 
 		private Color target;   //目標値
+		public Color Target { get { return target; } }
 
 		private Color colorDelta;   //前回との差(color)
 		public Color ColorDelta { get { return colorDelta; } }
@@ -58,15 +59,15 @@ namespace Seiro.Scripts.Utility {
 		/// 更新。処理中はtrueを返す
 		/// </summary>
 		public bool Update(float t, float epsilon = 0.01f) {
-			if(!processing) return false;
+			if (!processing) return false;
 			value = Color.Lerp(value, target, t);
 			//差を求める
 			colorDelta = target - value;
 			floatDelta = 0f;
-			for(int i = 0; i < 4; ++i) {
+			for (int i = 0; i < 4; ++i) {
 				floatDelta += Mathf.Abs(colorDelta[i]);
 			}
-			if(floatDelta < epsilon) {
+			if (floatDelta < epsilon) {
 				value = target;
 				processing = false;
 				return true;

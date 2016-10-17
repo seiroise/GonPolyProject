@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Scripts._Test.PolyPartsEditor.Common;
+using Scripts._Test1.UnitEditor.Common.Parts;
 
 namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 	
@@ -10,17 +11,24 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 	public class UnitEditorDatabase : UnitEditorComponent {
 
 		[Header("Prefab")]
-		public PolyPartsObject prefab;
+		public PartsObject prefab;
+
+		[Header("Callback")]
+		public PartsEvent onPartsDown;
+		public PartsEvent onPartsUp;
+		public PartsEvent onPartsClick;
+		public PartsEvent onInstantiateParts;
+		public PartsEvent onDeleteParts;
 
 		//内部パラメータ
-		private List<PolyPartsObject> polyObjs;
+		private List<PartsObject> partsObjs;
 
 		#region VirtualFunction
 
 		public override void Initialize(UnitEditor unitEditor) {
 			base.Initialize(unitEditor);
 
-			polyObjs = new List<PolyPartsObject>();
+			partsObjs = new List<PartsObject>();
 		}
 
 		#endregion
@@ -30,26 +38,88 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		/// <summary>
 		/// ポリゴンオブジェクトの初期化
 		/// </summary>
-		private void InitializePolyObj(PolyPartsObject polyObj) {
+		private void InitializePolyObj(PartsObject partsObj) {
 			//親の設定
-			polyObj.transform.SetParent(transform);
-
+			partsObj.transform.SetParent(transform);
 			//追加
-			polyObjs.Add(polyObj);
+			partsObjs.Add(partsObj);
+
+			//コールバックの設定
+			partsObj.onDown.AddListener(OnPartsDown);
+			partsObj.onUp.AddListener(OnPartsUp);
+			partsObj.onClick.AddListener(OnPartsClick);
 		}
 
 		/// <summary>
 		/// ポリゴンオブジェクトの生成
 		/// </summary>
-		public PolyPartsObject InstantiatePolyObj(List<Vector2> vertices) {
+		public PartsObject InstantiatePolyObj(List<Vector2> vertices, Color color) {
 			//生成と頂点の設定
-			PolyPartsObject polyObj = Instantiate<PolyPartsObject>(prefab);
-			polyObj.SetVertices(vertices);
+			PartsObject partsObj = Instantiate<PartsObject>(prefab);
+			partsObj.SetVertices(vertices, color);
 
 			//初期化
-			InitializePolyObj(polyObj);
+			InitializePolyObj(partsObj);
 
-			return polyObj;
+			//コールバック
+			onInstantiateParts.Invoke(partsObj);
+			
+			return partsObj;
+		}
+
+		/// <summary>
+		/// ポリゴンオブジェクトの削除
+		/// </summary>
+		public void DeletePolyPartsObject(PartsObject partsObj) {
+			if (partsObjs.Remove(partsObj)) {
+				//コールバック
+				onDeleteParts.Invoke(partsObj);
+				//削除
+				Destroy(partsObj.gameObject);
+			}
+		}
+
+		/// <summary>
+		/// 全てのポリゴンを有効化する
+		/// </summary>
+		public void EnablePolygons() {
+			for (int i = 0; i < partsObjs.Count; ++i) {
+				partsObjs[i].Enable();
+			}
+		}
+
+		/// <summary>
+		/// 全てのポリゴンを無効化する
+		/// </summary>
+		public void DisablePolygons() {
+			for (int i = 0; i < partsObjs.Count; ++i) {
+				partsObjs[i].Disable();
+			}
+		}
+
+		#endregion
+
+		#region PartsCallback
+
+		/// <summary>
+		/// パーツの押下
+		/// </summary>
+		private void OnPartsDown(PartsObject parts) {
+			onPartsDown.Invoke(parts);
+		}
+
+		/// <summary>
+		/// パーツの押上
+		/// </summary>
+		private void OnPartsUp(PartsObject parts) {
+			onPartsUp.Invoke(parts);
+		}
+
+		/// <summary>
+		/// パーツのクリック
+		/// </summary>
+		private void OnPartsClick(PartsObject parts) {
+			onPartsClick.Invoke(parts);
 		}
 
 		#endregion

@@ -26,16 +26,16 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide {
 
 			//コンポーネントの初期化
 			InitializeUIComponents(uiComponents);
-
-			//標準コンポーネントの表示
-			ShowDefault();
 		}
 
 		public override void LateInitialize() {
 			base.LateInitialize();
 
-			//後初期化
+			//遅延初期化
 			LateInitializeUIComponents(uiComponents);
+
+			//標準コンポーネントの表示
+			ShowDefault();
 		}
 		#endregion
 
@@ -89,7 +89,7 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide {
 		/// 標準UIの表示
 		/// </summary>
 		public void ShowDefault() {
-			if(!defaultUIComponent) return;
+			if (!defaultUIComponent) return;
 			ShowUI(defaultUIComponent.name);
 		}
 

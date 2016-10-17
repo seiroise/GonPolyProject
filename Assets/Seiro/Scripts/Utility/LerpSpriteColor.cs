@@ -35,22 +35,26 @@ namespace Seiro.Scripts.Utility {
 		#region Function
 
 		/// <summary>
-		/// 透過度の現在地と目標値を設定
+		/// 色の設定
 		/// </summary>
-		public void SetAlphas(float value, float target) {
-			Color vc = lerpColor.Value;
-			vc.a = value;
-			Color tc = new Color(vc.r, vc.g, vc.b, target);
-			lerpColor.SetValues(vc, tc);
+		public void SetColor(Color value, Color target) {
+			lerpColor.SetValues(value, target);
 		}
 
 		/// <summary>
-		/// 透過度の目標値を設定
+		/// 色の目標値の設定
 		/// </summary>
-		public void SetAlphaTarget(float to) {
-			Color c = lerpColor.Value;
-			c.a = to;
-			lerpColor.SetTarget(c);
+		public void SetTargetColor(Color target) {
+			lerpColor.SetTarget(target);
+		}
+
+		/// <summary>
+		/// 透明度の目標値の設定
+		/// </summary>
+		public void SetTargetAlpha(float value) {
+			Color v = lerpColor.Target;
+			v.a = value;
+			lerpColor.SetTarget(v);
 		}
 
 		#endregion

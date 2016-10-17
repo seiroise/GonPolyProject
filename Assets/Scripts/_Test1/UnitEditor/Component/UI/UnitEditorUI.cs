@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Scripts._Test1.UnitEditor.Component.UI.ShowHide;
+using Scripts._Test.PolyPartsEditor.UI.ColorEditor;
 
 namespace Scripts._Test1.UnitEditor.Component.UI {
 
@@ -10,6 +11,9 @@ namespace Scripts._Test1.UnitEditor.Component.UI {
 
 		[Header("Sidemenu")]
 		public UnitEditorUIShowHide sidemenu;
+
+		[Header("ColorEditField")]
+		public ColorEditField colorEditField;	//仮
 
 		#region VirtualFunction
 

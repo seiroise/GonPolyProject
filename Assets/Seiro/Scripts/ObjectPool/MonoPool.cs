@@ -38,6 +38,7 @@ namespace Seiro.Scripts.ObjectPool {
 		/// 追加
 		/// </summary>
 		protected void Add(int num) {
+			if (poolItem == null) return;
 			//生成して追加
 			for(int i = 0; i < num; ++i) {
 				T item = Instantiate<T>(poolItem.GetThis());

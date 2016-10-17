@@ -167,7 +167,7 @@ namespace Seiro.Scripts.EventSystems.Interface.Circle {
 
 			//スプライトの表示
 			if(lerpSprite != null) {
-				lerpSprite.SetAlphas(0f, 1f);
+				lerpSprite.SetTargetAlpha(1f);
 			}
 
 			visibled = true;
@@ -186,7 +186,7 @@ namespace Seiro.Scripts.EventSystems.Interface.Circle {
 
 			//スプライトの非表示
 			if(lerpSprite != null) {
-				lerpSprite.SetAlphaTarget(0f);
+				lerpSprite.SetTargetAlpha(0f);
 			}
 
 			visibled = false;

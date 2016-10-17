@@ -7,12 +7,13 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide.Sidemenu {
 	/// <summary>
 	/// デフォルトで表示するメニュー
 	/// </summary>
-	class UnitEditorUIMainmenu : UnitEditorUIShowHideComponent {
+	public class UnitEditorUIMainmenu : UnitEditorUIShowHideComponent {
 
 		[Header("LerpPosition")]
 		public UILerpRectPosition lerpPosition;
 
 		[Header("Buttons")]
+		public Button selectBtn;	//選択ボタン
 		public Button makeBtn;		//作成ボタン
 
 		#region VirtualFunction
