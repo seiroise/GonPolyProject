@@ -29,6 +29,10 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		private Color normalOutlineColor = new Color(0f, 0f, 0f, 0f);
 		private LerpColor lerpOutlineColor;
 
+		[Header("Marker")]
+		public string launcherMarker = "LauncherMarker";
+		public string boosterMarker = "BoosterMarker";
+
 		[Header("Callback")]
 		public PartsEvent onDown;
 		public PartsEvent onUp;
@@ -117,6 +121,13 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 			if (!lerpOutlineColor.Processing) return;
 			lerpOutlineColor.Update(outlineColorLerpT * Time.deltaTime);
 			draw = true;
+		}
+
+		/// <summary>
+		/// 砲台の生成
+		/// </summary>
+		private void CalcLauncher(List<Vector2> vertices) {
+		
 		}
 
 		#endregion

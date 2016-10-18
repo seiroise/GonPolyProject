@@ -113,8 +113,12 @@ namespace Scripts._Test1.UnitEditor.Component.StateMachine {
 		public void ActivateState(string name) {
 			//アクティブでなければ有効化しない
 			if (!activated) return;
+
 			//現在の状態
 			bool prevNull = (activeState == null);
+
+			//現在の状態と同じか確認
+			if(!prevNull && activeState.name.Equals(name)) return;
 
 			//現在有効化されている状態の無効化
 			DisactivateState();
