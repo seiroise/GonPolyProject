@@ -35,6 +35,13 @@ namespace Seiro.Scripts.Utility {
 		#region Function
 
 		/// <summary>
+		/// 目標色の取得
+		/// </summary>
+		public Color GetTargetColor() {
+			return lerpColor.Target;
+		}
+
+		/// <summary>
 		/// 色の設定
 		/// </summary>
 		public void SetColor(Color value, Color target) {

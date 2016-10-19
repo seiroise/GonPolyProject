@@ -278,8 +278,11 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		/// </summary>
 		public void Enable() {
 			if (!disabled) return;
-			disabled = !disabled;
+			disabled = false;
+			//ポリゴン本体の色を変更
 			SetPolygonColor(polygonColor);
+			//マーカーの有効化
+			EnableMarkers(showLauncherMarkers, showBoosterMarkers);
 		}
 
 		/// <summary>
@@ -287,8 +290,11 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		/// </summary>
 		public void Disable() {
 			if (disabled) return;
-			disabled = !disabled;
+			disabled = true;
+			//ポリゴン本体の色を変更
 			SetPolygonColor(polygonColor);
+			//マーカーの無効化
+			DisableMarkers(showLauncherMarkers, showBoosterMarkers);
 		}
 
 		#endregion
@@ -301,7 +307,6 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		private List<SpriteMarker> ShowEquipmentMarkers(string markerName, List<Equipment> equipments, UnityAction<GameObject> callback) {
 			if(equipments == null || equipments.Count <= 0) return null;
 			List<SpriteMarker> markers = marker.PopMarkers(markerName, equipments.Count, transform.localPosition);
-			Debug.Log("markers = " + markers.Count);
 			for(int i = 0; i < markers.Count; ++i) {
 				SpriteMarker m = markers[i];
 				Debug.Log(m.GetInstanceID());
@@ -312,11 +317,18 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 				m.onClick.RemoveListener(callback);
 				m.onClick.AddListener(callback);
 			}
+			//状態によって有効/無効化
+			if(disabled) {
+				DisableMarkers(markers);
+			} else {
+				EnableMarkers(markers);
+			}
+
 			return markers;
 		}
 
 		/// <summary>
-		/// マーカーの非表示
+		/// Equipmentマーカーの非表示
 		/// </summary>
 		private void HideMarkers(params List<SpriteMarker>[] markers) {
 			for(int i = 0; i < markers.Length; ++i) {
@@ -324,6 +336,33 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 				if (ms == null) continue;
 				for (int j = 0; j < ms.Count; ++j) {
 					ms[j].gameObject.SetActive(false);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Equipmentマーカーの有効化
+		/// </summary>
+		private void EnableMarkers(params List<SpriteMarker>[] markers) {
+			for(int i = 0; i < markers.Length; ++i) {
+				List<SpriteMarker> ms = markers[i];
+				if (ms == null) continue;
+				Debug.Log(ms);
+				for (int j = 0; j < ms.Count; ++j) {
+					ms[j].Enable();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Equipmentマーカーの無効化
+		/// </summary>
+		private void DisableMarkers(params List<SpriteMarker>[] markers) {
+			for(int i = 0; i < markers.Length; ++i) {
+				List<SpriteMarker> ms = markers[i];
+				if (ms == null) continue;
+				for (int j = 0; j < ms.Count; ++j) {
+					ms[j].Disable();
 				}
 			}
 		}
