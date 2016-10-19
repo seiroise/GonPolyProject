@@ -5,6 +5,10 @@ using Seiro.Scripts.Geometric;
 using Seiro.Scripts.Geometric.Polygon.Concave;
 using Seiro.Scripts.Graphics;
 using Seiro.Scripts.Utility;
+using Scripts._Test1.UnitEditor.Common.Parts.Equip;
+using Scripts._Test1.UnitEditor.Component.Utility.Marker;
+using System;
+using UnityEngine.Events;
 
 namespace Scripts._Test1.UnitEditor.Common.Parts {
 	
@@ -29,9 +33,16 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		private Color normalOutlineColor = new Color(0f, 0f, 0f, 0f);
 		private LerpColor lerpOutlineColor;
 
+		[Header("Equipment")]
+		public List<Equipment> launchers;		//砲台
+		public List<Equipment> boosters;		//ブースタ
+
 		[Header("Marker")]
 		public string launcherMarker = "LauncherMarker";
 		public string boosterMarker = "BoosterMarker";
+		private UnitEditorMarker marker;					//マーカー管理クラス
+		private List<SpriteMarker> showLauncherMarkers;		//表示している砲台マーカー
+		private List<SpriteMarker> showBoosterMarkers;		//表示しているブースタマーカー
 
 		[Header("Callback")]
 		public PartsEvent onDown;
@@ -124,15 +135,64 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		}
 
 		/// <summary>
-		/// 砲台の生成
+		/// 砲台の解析
 		/// </summary>
-		private void CalcLauncher(List<Vector2> vertices) {
-		
+		private List<Equipment> ParseLauncher(ConcavePolygon polygon, float tolerance = 1f) {
+			List<PolygonVertex> vertices = polygon.GetPolygonVertices();
+			int size = vertices.Count;
+			List<Equipment> launchers = new List<Equipment>();
+
+			float acutelity = 45f;	//鋭さ判定用
+
+			//解析開始
+			for (int i = 0; i < size; ++i) {
+				PolygonVertex p1 = vertices[(i + 1) % size];
+				PolygonVertex p2 = vertices[(i + 2) % size];
+
+				//鋭角あるいは鈍角か判定
+				if (p1.angle < (90f - acutelity) || (90f + acutelity) < p1.angle) continue;
+
+				//角度の和を求める
+				float sumAngle = p1.angle + p2.angle;
+
+				//角度の和が180度近辺の場合
+				if (180f - tolerance < sumAngle && sumAngle < 180f + tolerance) {
+					PolygonVertex p0 = vertices[i];
+					PolygonVertex p3 = vertices[(i + 3) % size];
+					//座標
+					Vector2 point = (p2.point - p1.point) * 0.5f + p1.point;
+					//角度
+					float angle = GeomUtil.TwoPointAngle(p0.point, p1.point);
+					//砲身長
+					float barrel0 = (p1.point - p0.point).magnitude;
+					float barrel1 = (p3.point - p2.point).magnitude;
+					float barrel = (barrel0 + barrel1) * 0.5f;
+					//口径
+					Line l1 = Line.FromPoints(p0.point, p1.point);
+					Line l2 = Line.FromPoints(p2.point, GeomUtil.RotateVector2(p3.point - p2.point, 90f) + p2.point);	//l1の垂直線
+					Vector2 intersection = Vector2.zero;
+					l1.GetIntersectionPoint(l2, ref intersection);
+					float caliber = (intersection - p2.point).magnitude;
+
+					launchers.Add(new Equipment("Launcher", point, angle));
+				}
+			}
+			return launchers;
 		}
 
 		#endregion
 
 		#region PublicFunction
+
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		public void Initialize(List<Vector2> vertices, Color color, UnitEditorMarker marker) {
+			this.marker = marker;
+			
+			//頂点の設定
+			SetVertices(vertices, color);
+		}
 
 		/// <summary>
 		/// 頂点の設定。始点と終点が結ばれていること
@@ -144,14 +204,18 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 				vertices[i] -= rect.center;
 			}
 			this.vertices = vertices;
+
 			//座標をずらす
 			transform.localPosition = rect.center;
+
 			//改めて包括矩形を求める
 			inclusionRect = GeomUtil.CalculateRect(vertices);
+
 			//ポリゴンの生成
 			//末尾を削除(一時的)
 			vertices.RemoveAt(vertices.Count - 1);
 			polygon = new ConcavePolygon(vertices);
+
 			//末尾に先頭を追加
 			vertices.Add(vertices[0]);
 
@@ -164,6 +228,13 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 
 			//色
 			SetPolygonColor(color);
+
+			//Equipmentの解析
+			launchers = ParseLauncher(polygon);
+
+			//マーカーの非表示/表示
+			HideMarkers(showLauncherMarkers);
+			showLauncherMarkers = ShowEquipmentMarkers(launcherMarker, launchers, OnLauncherMarkerClicked);
 
 			draw = true;
 		}
@@ -218,6 +289,55 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 			if (disabled) return;
 			disabled = !disabled;
 			SetPolygonColor(polygonColor);
+		}
+
+		#endregion
+
+		#region MarkerFunction
+
+		/// <summary>
+		/// Equipmentマーカーの表示
+		/// </summary>
+		private List<SpriteMarker> ShowEquipmentMarkers(string markerName, List<Equipment> equipments, UnityAction<GameObject> callback) {
+			if(equipments == null || equipments.Count <= 0) return null;
+			List<SpriteMarker> markers = marker.PopMarkers(markerName, equipments.Count, transform.localPosition);
+			Debug.Log("markers = " + markers.Count);
+			for(int i = 0; i < markers.Count; ++i) {
+				SpriteMarker m = markers[i];
+				Debug.Log(m.GetInstanceID());
+				m.name = i.ToString();
+				m.transform.localPosition += (Vector3)equipments[i].point;
+				m.transform.localEulerAngles = new Vector3(0f, 0f, equipments[i].angle);
+				//コールバックの設定
+				m.onClick.RemoveListener(callback);
+				m.onClick.AddListener(callback);
+			}
+			return markers;
+		}
+
+		/// <summary>
+		/// マーカーの非表示
+		/// </summary>
+		private void HideMarkers(params List<SpriteMarker>[] markers) {
+			for(int i = 0; i < markers.Length; ++i) {
+				List<SpriteMarker> ms = markers[i];
+				if (ms == null) continue;
+				for (int j = 0; j < ms.Count; ++j) {
+					ms[j].gameObject.SetActive(false);
+				}
+			}
+		}
+
+		#endregion
+
+		#region Callback
+
+		/// <summary>
+		/// 砲台マーカーのクリック
+		/// </summary>
+		private void OnLauncherMarkerClicked(GameObject gObj) {
+			int index = int.Parse(gObj.name);
+			Debug.Log("Clicked Launcher [" + index + "]");
 		}
 
 		#endregion

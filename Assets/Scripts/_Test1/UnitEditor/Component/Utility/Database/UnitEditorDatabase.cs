@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Scripts._Test.PolyPartsEditor.Common;
 using Scripts._Test1.UnitEditor.Common.Parts;
+using Scripts._Test1.UnitEditor.Component.Utility.Marker;
 
 namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 	
@@ -23,12 +24,21 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		//内部パラメータ
 		private List<PartsObject> partsObjs;
 
+		//パーツオブジェクト初期化用
+		private UnitEditorMarker marker;
+
 		#region VirtualFunction
 
 		public override void Initialize(UnitEditor unitEditor) {
 			base.Initialize(unitEditor);
 
 			partsObjs = new List<PartsObject>();
+		}
+
+		public override void LateInitialize() {
+			base.LateInitialize();
+
+			marker = unitEditor.marker;
 		}
 
 		#endregion
@@ -56,7 +66,7 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		public PartsObject InstantiateParts(List<Vector2> vertices, Color color) {
 			//生成と頂点の設定
 			PartsObject partsObj = Instantiate<PartsObject>(prefab);
-			partsObj.SetVertices(vertices, color);
+			partsObj.Initialize(vertices, color, marker);
 
 			//初期化
 			InitializeParts(partsObj);

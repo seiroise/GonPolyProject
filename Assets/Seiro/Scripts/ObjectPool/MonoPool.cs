@@ -55,17 +55,24 @@ namespace Seiro.Scripts.ObjectPool {
 		/// </summary>
 		protected T Pop() {
 			//deactivatedなものを見つけるまでループ
+			T temp = null;
 			int count = pool.Count;
-			for(int i = 0; i < count; ++i, ++popIndex) {
+			for(int i = 0; i < count && temp == null; ++i, ++popIndex) {
 				popIndex %= count;
 				if(!pool[popIndex].gameObject.activeInHierarchy) {
-					return pool[popIndex];
+					temp = pool[popIndex];
 				}
 			}
 
 			//一周探して見つからなかった場合は追加
-			Add(addPoolNum);
-			return pool[popIndex = count];
+			if (temp == null) {
+				Add(addPoolNum);
+				temp = pool[popIndex = count];
+			}
+			//有効化
+			temp.gameObject.SetActive(true);
+			temp.Activate();
+			return temp;
 		}
 
 		/// <summary>
@@ -89,7 +96,6 @@ namespace Seiro.Scripts.ObjectPool {
 		public T PopItem(Vector3 position) {
 			T item = Pop();
 			item.transform.localPosition = position;
-			item.Activate();
 			return item;
 		}
 
@@ -100,7 +106,6 @@ namespace Seiro.Scripts.ObjectPool {
 			List<T> items = Pop(num);
 			for(int i = 0; i < items.Count; ++i) {
 				items[i].transform.localPosition = position;
-				items[i].Activate();
 			}
 			return items;
 		}

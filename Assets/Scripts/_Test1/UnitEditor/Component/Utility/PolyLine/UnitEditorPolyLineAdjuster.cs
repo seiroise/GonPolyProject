@@ -351,7 +351,6 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 			//マーカーの取得
 			SpriteMarker m = marker.PopMarker(vertexMarker, point);
 			m.gameObject.name = markerName;
-			m.gameObject.SetActive(true);
 			//コールバックの設定
 			m.onDown.RemoveListener(OnVertexMarkerDown);
 			m.onDown.AddListener(OnVertexMarkerDown);
@@ -368,7 +367,6 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 			//マーカーの取得
 			SpriteMarker m = marker.PopMarker(addMarker, point);
 			m.gameObject.name = markerName;
-			m.gameObject.SetActive(true);
 			//コールバックの設定
 			m.onDown.RemoveListener(OnAddMarkerDown);
 			m.onDown.AddListener(OnAddMarkerDown);
@@ -383,7 +381,6 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.PolyLine {
 			//マーカーの取得
 			SpriteMarker m = marker.PopMarker(removeMarker, point);
 			m.gameObject.name = markerName;
-			m.gameObject.SetActive(true);
 			//コールバックの設定
 			m.onDown.RemoveListener(OnRemoveMarkerDown);
 			m.onDown.AddListener(OnRemoveMarkerDown);
