@@ -15,6 +15,7 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide {
 		public List<UnitEditorUIShowHideComponent> uiComponents;	//登録コンポーネント
 		private Dictionary<string, UnitEditorUIShowHideComponent> uiComponentTable;	//コンポーネントテーブル
 		private UnitEditorUIShowHideComponent activeUIComponent;	//有効コンポーネント
+		private UnitEditorUIShowHideComponent prevActiveUIComponent;	//一つ前に有効だったコンポーネント
 
 		#region VirtualFunction
 
@@ -28,6 +29,9 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide {
 			InitializeUIComponents(uiComponents);
 		}
 
+		/// <summary>
+		/// 遅延初期化
+		/// </summary>
 		public override void LateInitialize() {
 			base.LateInitialize();
 
@@ -37,6 +41,7 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide {
 			//標準コンポーネントの表示
 			ShowDefault();
 		}
+
 		#endregion
 
 		#region UIComponentFunction
@@ -75,6 +80,7 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide {
 		/// UIの表示
 		/// </summary>
 		public void ShowUI(string name) {
+
 			//表示されているものを非表示
 			HideUI();
 
@@ -94,11 +100,22 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide {
 		}
 
 		/// <summary>
+		/// 前回UIの表示
+		/// </summary>
+		public void ShowPrevUI() {
+			if (prevActiveUIComponent == null) return;
+
+			//表示
+			ShowUI(prevActiveUIComponent.name);
+		}
+
+		/// <summary>
 		/// UIの非表示
 		/// </summary>
 		public void HideUI() {
 			if (activeUIComponent == null) return;
 			activeUIComponent.Hide();
+			prevActiveUIComponent = activeUIComponent;
 			activeUIComponent = null;
 		}
 

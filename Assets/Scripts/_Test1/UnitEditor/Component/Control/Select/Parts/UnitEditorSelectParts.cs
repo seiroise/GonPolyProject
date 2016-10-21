@@ -96,6 +96,7 @@ namespace Scripts._Test1.UnitEditor.Component.Control.Select.Parts {
 		/// 戻るボタンのクリック
 		/// </summary>
 		private void OnExitButtonClicked() {
+			//無効化
 			owner.DisactivateState();
 		}
 

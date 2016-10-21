@@ -11,10 +11,7 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide.Sidemenu {
 	/// <summary>
 	/// パーツ選択時に表示するメニュー
 	/// </summary>
-	public class UnitEditorUIPartsMenu : UnitEditorUIShowHideComponent {
-
-		[Header("LerpPosition")]
-		public UILerpRectPosition lerpPosition;
+	public class UnitEditorUIPartsMenu : UnitEditorUISideMenu {
 
 		[Header("Buttons")]
 		public Button adjustBtn;	//調整ボタン
@@ -24,26 +21,5 @@ namespace Scripts._Test1.UnitEditor.Component.UI.ShowHide.Sidemenu {
 		public Button copyBtn;		//コピーボタン
 		public Button deleteBtn;	//削除ボタン
 
-		public Button exitBtn;		//戻るボタン
-
-		#region VirtualFunction
-
-		/// <summary>
-		/// 表示
-		/// </summary>
-		public override void Show() {
-			base.Show();
-			lerpPosition.ToAfter();
-		}
-
-		/// <summary>
-		/// 非表示
-		/// </summary>
-		public override void Hide() {
-			base.Show();
-			lerpPosition.ToBefore();
-		}
-
-		#endregion
 	}
 }

@@ -29,7 +29,7 @@ namespace Scripts._Test1.UnitEditor.Component.Control.Select {
 			database = unitEditor.database;
 
 			//menuの取得
-			UnitEditorUIMainmenu mainmenu = (UnitEditorUIMainmenu)unitEditor.ui.sidemenu.GetUIComponent(MENU);
+			UnitEditorUIMainMenu mainmenu = (UnitEditorUIMainMenu)unitEditor.ui.sidemenu.GetUIComponent(MENU);
 
 			//UIコールバック追加
 			mainmenu.selectBtn.onClick.AddListener(OnSelectBtnClicked);

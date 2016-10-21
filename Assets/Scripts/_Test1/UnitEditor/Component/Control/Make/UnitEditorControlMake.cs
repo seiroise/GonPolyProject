@@ -41,7 +41,7 @@ namespace Scripts._Test1.UnitEditor.Component.Control.Make {
 			maker = (UnitEditorPolyLineMaker)polyLine.GetState(LINE_COM);
 
 			//UIコールバックの設定
-			UnitEditorUIMainmenu mainmenu = (UnitEditorUIMainmenu)unitEditor.ui.sidemenu.GetUIComponent(MENU);
+			UnitEditorUIMainMenu mainmenu = (UnitEditorUIMainMenu)unitEditor.ui.sidemenu.GetUIComponent(MENU);
 			mainmenu.makeBtn.onClick.AddListener(OnMakeBtnClicked);
 
 			//ColorEditFieldの取得

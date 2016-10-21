@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Scripts._Test.PolyPartsEditor.Common;
 using Scripts._Test1.UnitEditor.Common.Parts;
 using Scripts._Test1.UnitEditor.Component.Utility.Marker;
+using Scripts._Test1.UnitEditor.Common.Parts.Equip;
 
 namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 	
@@ -14,12 +15,16 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		[Header("Prefab")]
 		public PartsObject prefab;
 
-		[Header("Callback")]
+		[Header("Parts Callback")]
 		public PartsEvent onPartsDown;
 		public PartsEvent onPartsUp;
 		public PartsEvent onPartsClick;
 		public PartsEvent onInstantiateParts;
 		public PartsEvent onDeleteParts;
+
+		[Header("Marker Callback")]
+		public EquipmentEvent onLauncherClick;
+		public EquipmentEvent onBoosterClick;
 
 		//内部パラメータ
 		private List<PartsObject> partsObjs;
@@ -57,7 +62,9 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 			//コールバックの設定
 			partsObj.onDown.AddListener(OnPartsDown);
 			partsObj.onUp.AddListener(OnPartsUp);
-			partsObj.onClick.AddListener(OnPartsClick);
+			partsObj.onClick.AddListener(OnPartsClicked);
+			partsObj.onLauncherClick.AddListener(OnLauncherClicked);
+			partsObj.onBoosterClick.AddListener(OnBoosterClicked);
 		}
 
 		/// <summary>
@@ -128,8 +135,26 @@ namespace Scripts._Test1.UnitEditor.Component.Utility.Database {
 		/// <summary>
 		/// パーツのクリック
 		/// </summary>
-		private void OnPartsClick(PartsObject parts) {
+		private void OnPartsClicked(PartsObject parts) {
 			onPartsClick.Invoke(parts);
+		}
+
+		#endregion
+
+		#region MarkerCallback
+
+		/// <summary>
+		/// ランチャーマーカーのクリック
+		/// </summary>
+		private void OnLauncherClicked(PartsObject parts, Equipment equipment) {
+			onLauncherClick.Invoke(parts, equipment);
+		}
+
+		/// <summary>
+		/// ブースターマーカーのクリック
+		/// </summary>
+		private void OnBoosterClicked(PartsObject parts, Equipment equipment) {
+
 		}
 
 		#endregion

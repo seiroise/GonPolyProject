@@ -48,6 +48,8 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		public PartsEvent onDown;
 		public PartsEvent onUp;
 		public PartsEvent onClick;
+		public EquipmentEvent onLauncherClick;
+		public EquipmentEvent onBoosterClick;
 
 		//形状データ
 		private List<Vector2> vertices;		//頂点
@@ -372,11 +374,12 @@ namespace Scripts._Test1.UnitEditor.Common.Parts {
 		#region Callback
 
 		/// <summary>
-		/// 砲台マーカーのクリック
+		/// ランチャーマーカーのクリック
 		/// </summary>
 		private void OnLauncherMarkerClicked(GameObject gObj) {
 			int index = int.Parse(gObj.name);
-			Debug.Log("Clicked Launcher [" + index + "]");
+			//コールバック呼び出し
+			onLauncherClick.Invoke(this, launchers[index]);
 		}
 
 		#endregion
